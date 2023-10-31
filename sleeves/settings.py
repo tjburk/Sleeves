@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'sleeves.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'tjb6ha_a',
+        'USER': 'tjb6ha',
+        'PASSWORD': 'Sleeves!2023',
+        'HOST': 'mysql01.cs.virginia.edu',
+        'PORT': '3306',
     }
 }
 
