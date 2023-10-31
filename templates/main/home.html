@@ -4,6 +4,10 @@
     </head>
     <body>
         <h1>Sleeves lol</h1>
-        <p>{{ artist_list }}</p>
+        <ul>
+        {% for media_item in media_list %}
+            <li>Spotify id: {{ media_item.spotify_id }},  <br>Rating: {{ media_item.overall_rating }}</li>
+        {% endfor %}
+        </ul>
     </body>
 </html>

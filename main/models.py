@@ -155,17 +155,6 @@ class Genre(models.Model):
         db_table = 'genre'
 
 
-class MainArtist(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    artist_id = models.CharField(max_length=50)
-    artist_name = models.CharField(max_length=200)
-    bio = models.CharField(max_length=1000)
-
-    class Meta:
-        managed = False
-        db_table = 'main_artist'
-
-
 class Media(models.Model):
     spotify_id = models.CharField(primary_key=True, max_length=50)
     overall_rating = models.FloatField(blank=True, null=True)

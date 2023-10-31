@@ -1,7 +1,14 @@
 from django.shortcuts import render
-from .models import Artist
+from .models import Media
 
-def all_artists(request):
-    artist_list = Artist.objects.all()
+def list_media(request, filter):
+    media_list = Media.objects.raw(
+        f"""
+        SELECT spotify_id, overall_rating
+        FROM media
+        ORDER BY {filter} DESC
+        """
+    )
+
     return render(request, 'main/home.html',
-                  {'artist_list': artist_list,})
+                  {'media_list': media_list,})
