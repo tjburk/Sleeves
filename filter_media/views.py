@@ -14,7 +14,7 @@ def filter_media(request):
             f"""
             SELECT title, spotify_id, overall_rating
             FROM media NATURAL JOIN spotify
-            ORDER BY {filter} {order}
+            ORDER BY {filter} {order};
             """
             )
             return render(request, 'filter_media/filter.html',
