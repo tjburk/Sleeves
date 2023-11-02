@@ -39,7 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'sleeves',
+    'homepage',
     'filter_media',
+    'search_media',
 ]
 
 MIDDLEWARE = [

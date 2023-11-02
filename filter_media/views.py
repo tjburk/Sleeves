@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Media
+from sleeves.models import Media
 from .forms import FilterMediaForm
 
 def filter_media(request):
@@ -17,10 +17,10 @@ def filter_media(request):
             ORDER BY {filter} {order}
             """
             )
-            return render(request, 'main/home.html',
+            return render(request, 'filter_media/filter.html',
                 {'filter_form': filter_form, 'media_list': media_list,})
     else:
         filter_form = FilterMediaForm()
 
-    return render(request, 'main/home.html',
+    return render(request, 'filter_media/filter.html',
                 {'filter_form': filter_form,})
