@@ -2,14 +2,14 @@ from django import forms
 
 class FilterMediaForm(forms.Form):
     DATABASE_CHOICES = [
-    ('title', 'title'),
-    ('overall_rating', 'overall_rating'),
-    ('length', 'length')
+    ('title', 'Title'),
+    ('overall_rating', 'Rating'),
+    ('length', 'Length')
     ]
     ORDER_CHOICES = [
-    ('ASC', 'ascending'),
-    ('DESC', 'descending'),
+    ('ASC', 'Ascending'),
+    ('DESC', 'Descending'),
     ]
 
     filter = forms.CharField(label='Order by...', widget=forms.Select(choices=DATABASE_CHOICES))
-    order = forms.CharField(widget=forms.Select(choices=ORDER_CHOICES))
+    order = forms.CharField(label='', widget=forms.Select(choices=ORDER_CHOICES))
