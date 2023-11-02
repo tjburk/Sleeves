@@ -3,6 +3,19 @@
         <title>Search</title>
     </head>
     <body>
-        Search Results
+        <form method="post">
+            {% csrf_token %}
+            {{ search_form }}
+            <input type="submit" value="Submit">
+        </form>
+        <ul>
+            {% if search_results %}
+                {% for media_item in search_results %}
+                    <li><strong>Title: </strong>{{ media_item.title }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
+                {% endfor %}
+            {% else %}
+                <p>No results...</p>    
+            {% endif %}
+        </ul>
     </body>
 </html>
