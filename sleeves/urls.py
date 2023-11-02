@@ -18,6 +18,6 @@ from django.urls import path
 from filter_media import views
 
 urlpatterns = [
-    path('', views.filter_media, name="home"),
+    path('filter/', views.filter_media, name="filter"),
     path('admin/', admin.site.urls),
 ]
