@@ -4,9 +4,14 @@
     </head>
     <body>
         <h1>Sleeves lol</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ filter_form }}
+            <input type="submit" value="Submit">
+        </form>
         <ul>
         {% for media_item in media_list %}
-            <li>Spotify id: {{ media_item.spotify_id }},  <br>Rating: {{ media_item.overall_rating }}</li>
+            <li><strong>Title: </strong>{{ media_item.title }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
         {% endfor %}
         </ul>
     </body>
