@@ -17,9 +17,8 @@ def create_rating(request):
             star_rating = rate_form.cleaned_data["star_rating"]
             text = rate_form.cleaned_data["text"]
 
-            # Get Spotify ID from URL
-
-            spotify_id = spotify_url.split('/')[4]
+            # Get the spotify ID from the URL
+            spotify_id = spotify_url.split('/')[4].split('?')[0]
 
             # Insert user into SleevesUser table if it is not already in there
             if get_user(firstname, lastname) is None:
@@ -62,7 +61,7 @@ def insert_user(firstname, lastname):
         cursor.execute(
             f"""
             INSERT INTO sleeves_user (first, last)
-            VALUES ('{firstname}', '{lastname}');
+            VALUES ("{firstname}", "{lastname}");
             """
         )
 
@@ -73,7 +72,7 @@ def insert_rating(user_id, spotify_id, title, star_rating, text):
             cursor.execute(
                 f"""
                 INSERT INTO review
-                VALUES ('{user_id}', '{spotify_id}', '{title}', '{star_rating}', '{text}');
+                VALUES ({user_id}, "{spotify_id}", "{title}", {star_rating}, "{text}");
                 """
             )
             return True
