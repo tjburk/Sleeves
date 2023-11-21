@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'homepage',
     'filter_media',
     'search_media',
+    'create_rating',
 ]
 
 MIDDLEWARE = [
