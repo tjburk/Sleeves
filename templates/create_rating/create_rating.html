@@ -10,10 +10,12 @@
             <input type="submit" value="Submit">
         </form>
 
-        {% if success %}
-            <p>Rating created by {{user.first}}, {{user.last}}</p>
-        {% else %}
-            <p>There was a problem creating your review... Is it a duplicate?</p>
+        {% if init %}
+            {% if success %}
+                <p>Rating created by {{user.first}}, {{user.last}}</p>
+            {% else %}
+                <p>There was a problem creating your review... Is it a duplicate?</p>
+            {% endif %}
         {% endif %}
     </body>
 </html>

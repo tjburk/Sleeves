@@ -12,10 +12,14 @@ def create_rating(request):
             # Get data from form
             firstname = rate_form.cleaned_data["firstname"]
             lastname = rate_form.cleaned_data["lastname"]
-            spotify_id = rate_form.cleaned_data["spotify_id"]
+            spotify_url = rate_form.cleaned_data["spotify_url"]
             title = rate_form.cleaned_data["title"]
             star_rating = rate_form.cleaned_data["star_rating"]
             text = rate_form.cleaned_data["text"]
+
+            # Get Spotify ID from URL
+
+            spotify_id = spotify_url.split('/')[4]
 
             # Insert user into SleevesUser table if it is not already in there
             if get_user(firstname, lastname) is None:
@@ -27,12 +31,12 @@ def create_rating(request):
             success = insert_rating(user.user_id, spotify_id, title, star_rating, text)
 
             return render(request, 'create_rating/create_rating.html',
-                {'rate_form':rate_form, "user":user, "success":success})
+                {'rate_form':rate_form, "user":user, "success":success, "init":True})
     else:
         rate_form = RateForm()
 
     return render(request, 'create_rating/create_rating.html', 
-                {'rate_form': rate_form})
+                {'rate_form': rate_form, "init":False})
 
 
 def get_user(firstname, lastname):
