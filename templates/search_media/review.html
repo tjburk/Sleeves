@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Review Search</title>
+    </head>
+    <body>
+        <form method="post">
+            {% csrf_token %}
+            {{ review_form }}
+            <input type="submit" value="Submit">
+        </form>
+        <ul>
+            {% if review_results %}
+                {% for media_item in review_results %}
+                    <li><strong>Author: </strong>{{ media_item.first }} {{media_item.last}}, <li>{{ media_item.title }} <strong>For : {{media_item.name}}</strong>,  <br><strong>Rating: </strong>{{ media_item.star_rating }}</li>
+                    <body>{{media_item.text}}</body>
+                {% endfor %}
+            {% else %}
+                <p>No results...</p>    
+            {% endif %}
+        </ul>
+    </body>
+</html>
