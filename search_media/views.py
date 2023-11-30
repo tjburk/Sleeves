@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from sleeves.models import Media
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from sleeves.models import Media, Artist
 from .forms import SearchMediaForm
 
 def search_media(request):
@@ -23,3 +24,4 @@ def search_media(request):
 
     return render(request, 'search_media/search.html',
                 {'search_form': search_form,})
+
