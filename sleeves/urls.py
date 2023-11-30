@@ -18,7 +18,6 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path('filter/', include('filter_media.urls'), name="filter"),
     path('search/', include('search_media.urls'), name="search"),
     path('create_rating/', include('create_rating.urls'), name="create_rating"),
     path('review/', include('search_media.urls'), name="review"),

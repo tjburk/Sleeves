@@ -41,7 +41,6 @@ INSTALLED_APPS = [
 
     'sleeves',
     'homepage',
-    'filter_media',
     'search_media',
     'create_rating',
 ]
