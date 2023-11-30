@@ -8,6 +8,8 @@ def search_media(request):
 
         if search_form.is_valid():
             search_keyword = search_form.cleaned_data["search_keyword"]
+            filter = search_form.cleaned_data["filter"]
+            order = search_form.cleaned_data["order"]
 
             search_results = Media.objects.raw(
             f"""
@@ -18,12 +20,12 @@ def search_media(request):
                 OR spotify_id = song_id)
             """
             )
-            return render(request, 'search_media/search.html',
+            return render(request, 'search_media/media.html',
                 {'search_form': search_form, 'search_results': search_results,})
     else:
         search_form = SearchMediaForm()
 
-    return render(request, 'search_media/search.html',
+    return render(request, 'search_media/media.html',
                 {'search_form': search_form,})
 
 def view_reviews(request):
