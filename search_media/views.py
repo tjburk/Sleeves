@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import Media
+from sleeves.models import Media, SleevesUser
 from .forms import SearchMediaForm
 
 def search_media(request):
@@ -62,17 +62,26 @@ def user_search(request):
         if search_form.is_valid():
             search_keyword = search_form.cleaned_data["search_keyword"]
 
-            search_results = Media.objects.raw(
+            search_results = SleevesUser.objects.raw(
                 f"""
-                    SELECT *
+                    SELECT user_id, first, last
                     FROM sleeves_user
-                    WHERE user_id LIKE '%%{search_keyword}%%'
+                    WHERE CONCAT(first,last) LIKE '%%{search_keyword}%%'
+                    OR user_id LIKE '%%{search_keyword}%%'
+                    OR first LIKE '%%{search_keyword}%%'
+                    OR last LIKE '%%{search_keyword}%%'
                 """
             )
             return render(request, 'search_media/user.html',
                           {'user_form' : search_form, 'user_results' : search_results})
     else:
         search_form = SearchMediaForm()
+        search_results = SleevesUser.objects.raw(
+                f"""
+                    SELECT user_id, first, last 
+                    FROM sleeves_user
+                """ 
+            )
 
     return render(request, 'search_media/user.html',
-                          {'user_form' : search_form})
+                          {'user_form' : search_form, 'user_results' : search_results})

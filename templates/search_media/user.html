@@ -9,12 +9,12 @@
             <input type="submit" value="Submit">
         </form>
         <ul>
-            {% if search_results %}
-                {% for media_item in search_results %}
-                    <li><strong>Author: </strong>{{ media_item.user }}, <li>{{ media_item.review.title }},  <br><strong>Rating: </strong>{{ media_item.star_rating }}</li>
+            {% if user_results %}
+                {% for media_item in user_results %}
+                    <li><strong>User: </strong>{{ media_item.first }} {{media.item.last}}
                     <body>{{media_item.text}}</body>
                 {% endfor %}
-            {% else %}
+            {% else %}  
                 <p>No results...</p>    
             {% endif %}
         </ul>
