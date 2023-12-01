@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <title>Search</title>
+    </head>
+    <body>
+        <form method="post">
+            {% csrf_token %}
+            {{ search_form }}
+            <input type="submit" value="Submit">
+        </form>
+        <ul>
+            {% if search_results %}
+                {% for media_item in search_results %}
+                    {% if media_item.type == "album"%}
+                        {% if media_item.album_type == "album"%}
+                            <li><strong>Album: </strong>{{ media_item.name }} By {{ media_item.artist_name }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
+                            <img src = "{{ media_item.album_art }}">
+                        {% elif media_item.album_type == "single"%}
+                            <li><strong>Single: </strong>{{ media_item.name }} By {{ media_item.artist_name }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
+                        {% endif %}
+                    {% elif media_item.type == "track"%}
+                        <li><strong>Song: </strong>{{ media_item.name }} By {{ media_item.artist_name }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <p>No results...</p>    
+            {% endif %}
+        </ul>
+    </body>
+</html>

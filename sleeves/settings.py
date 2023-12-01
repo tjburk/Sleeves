@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,8 +42,9 @@ INSTALLED_APPS = [
 
     'sleeves',
     'homepage',
-    'filter_media',
+    'media_page',
     'search_media',
+    'create_rating',
 ]
 
 MIDDLEWARE = [
@@ -126,8 +128,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Spotify redirect id
+SPOTIPY_CLIENT_ID = config("SPOTIPY_CLIENT_ID")
+SPOTIPY_CLIENT_SECRET = config("SPOTIPY_CLIENT_SECRET")
+SPOTIPY_REDIRECT_URI='http//localhost:8000'
