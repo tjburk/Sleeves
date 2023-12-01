@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import Media, Album, Song, Artist
+from sleeves.models import Media, Album, Song, Artist, Review
 
 def media_view(request, spotify_id):
     media_object = Media.objects.raw(
@@ -16,7 +16,7 @@ def media_view(request, spotify_id):
     song_object = None
     artist_object = None
     
-    # Get Album
+    # Get Song and Album if it's a song
     if media_object.type == "track":
         song_object = Song.objects.raw(
         f"""
@@ -36,7 +36,8 @@ def media_view(request, spotify_id):
         """
         )[0]
     
-    if media_object.type == "album":
+    # Only get album if it's an album
+    elif media_object.type == "album":
         album_object = Album.objects.raw(
         f"""
         SELECT *
@@ -46,6 +47,7 @@ def media_view(request, spotify_id):
         """
         )[0]
     
+    # If the album was fetched successfully, get the artist
     if(album_object):
         artist_object = Artist.objects.raw(
         f"""
@@ -56,5 +58,13 @@ def media_view(request, spotify_id):
         """
         )[0]
     
+    reviews = Review.objects.raw(
+        f"""
+        SELECT *
+        FROM review
+        WHERE spotify_id = '{spotify_id}'
+        """
+        )
+    
     return render(request, 'media_page/media_page.html',
-        {'album': album_object, 'song':song_object, 'artist':artist_object, 'media': media_object})
+        {'album': album_object, 'song':song_object, 'artist':artist_object, 'media': media_object, 'reviews':reviews})

@@ -11,16 +11,15 @@
         <ul>
             {% if search_results %}
                 {% for media_item in search_results %}
-                    {% if media_item.type == "album"%}
-                        {% if media_item.album_type == "album"%}
-                            <li><strong>Album: </strong>{{ media_item.name }} By {{ media_item.artist_name }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
-                            <img src = "{{ media_item.album_art }}">
-                        {% elif media_item.album_type == "single"%}
-                            <li><strong>Single: </strong>{{ media_item.name }} By {{ media_item.artist_name }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
-                        {% endif %}
-                    {% elif media_item.type == "track"%}
-                        <li><strong>Song: </strong>{{ media_item.name }} By {{ media_item.artist_name }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
+                    {% if media_item.type == "album" %}
+                        <li><strong>{{media_item.album_type.capitalize}}: </strong>
+                    {% elif media_item.type == "track" %}
+                        <li><strong>Song: </strong>
                     {% endif %}
+                    <span><a href="{% url 'media_page' media_item.spotify_id%}">{{ media_item.name }} by {{ media_item.artist_name }}</a></span>
+                    <div><strong>Rating: </strong>{{ media_item.overall_rating }}</div>
+                    <img src = "{{ media_item.album_art }}">
+                    </li>
                 {% endfor %}
             {% else %}
                 <p>No results...</p>    

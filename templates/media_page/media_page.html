@@ -3,8 +3,19 @@
         <title>Media</title>
     </head>
     <body>
-        <p>{{media.name}}, {{media.overall_rating}}</p>
+        <input type=button value="Back" onClick="javascript:history.go(-1);">
+        <h1>{{media.name}} {% if reviews %} : {{media.overall_rating}} Stars {% endif %}</h1>
         <p>By: {{artist.artist_name}}</p>
         <img src={{album.album_art}}>
+        <h2>Reviews</h2>
+        {% if reviews %}
+            {% for review in reviews %}
+                <div><strong>{{review.title}}</strong></div>
+                <div>{{review.text}}</div>
+                <div>- {{review.star_rating}} Stars</div><br>
+            {% endfor %}
+        {% else %}
+            <p>No reivews yet!</p>
+        {% endif %}
     </body>
 </html>

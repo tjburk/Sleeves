@@ -2,7 +2,7 @@ from django.shortcuts import render
 from sleeves.models import Media, SleevesUser
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
-from sleeves.models import Media, Artist
+from sleeves.models import Media
 from .forms import SearchMediaForm
 
 def search_media(request):
@@ -69,7 +69,7 @@ def search_media(request):
 #                           {'review_form' : search_form, 'review_results' : search_results})
 
 
-def user_search(request):
+def search_user(request):
     if request.method == "POST":
         search_form = SearchMediaForm(request.POST)
 
