@@ -139,7 +139,7 @@ def insert_media(spotify_id, spotify_type, star_rating):
         )
     if spotify_type == "track":
         if not get_album(media["album"]["id"]):
-            insert_media(media["album"]["id"], None) # recursive call with no rating!
+            insert_media(media["album"]["id"], "album", None) # recursive call with no rating!
         insert_song(media)
     elif spotify_type == "album":
         insert_album(media)
