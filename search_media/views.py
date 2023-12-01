@@ -19,7 +19,6 @@ def search_media(request):
             SELECT DISTINCT media.spotify_id, type, media.name, overall_rating, artist_name, album_type, album_art
             FROM media, album NATURAL JOIN artist, song 
             WHERE name LIKE '%%{search_keyword}%%'
-            ORDER BY {filter} {order}
             AND (spotify_id = album.album_id 
                 OR (spotify_id = song_id AND album.album_id=song.album_id))
             ORDER BY {filter} {order}
