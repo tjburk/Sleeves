@@ -1,8 +1,19 @@
 <html>
     <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'homepage/home.css' %}" />
         <title>Home</title>
     </head>
     <body>
-        Home
+        {% include 'homepage/navbar.html' %}
+
+        <div id="songs-grid">
+            <img class='top-songs' src="../../static/images/bear1.jpeg">
+            <img class='top-songs' src="../../static/images/girl2.jpg">
+            <img class='top-songs' src="../../static/images/random3.jpg">
+            <img class='top-songs' src="../../static/images/forest4.jpg">
+            <img class='top-songs' src="../../static/images/color5.jpg">
+        </div>
+
     </body>
 </html>
