@@ -23,5 +23,12 @@
             <div>{{review.text}}</div>
             <div>- {{review_user.first}} {{review_user.last}}</div>
         </div>
+        <p>TOP 5 ALBUMS</p>
+        <div id="album-grid">
+            {% for album in bestestalbums %}
+            <span>{{album.name}}, {{album.overall_rating}} <img class='best-album' src ="{{album.album_art}}"></span>
+            {% endfor %}
+        </div>
+
     </body>
 </html>
