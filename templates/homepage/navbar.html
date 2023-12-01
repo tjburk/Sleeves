@@ -1,0 +1,26 @@
+<html>
+<head>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'homepage/navbar.css' %}" />
+</head>
+<body>
+
+<div id="header">
+
+  <div id="title-container">
+    <img id='record-logo' src="../../static/images/record.png">
+    <div id="logo">
+      <h1>Sleeves</h1>
+    </div>
+  </div>
+  <nav id="navbar" class="navbar">
+    <ul>
+      <li><a class="nav-link scrollto" href="{% url 'home' %}">Home</a></li>
+    </ul>
+  </nav>
+
+</div>
+
+
+</body>
+</html>

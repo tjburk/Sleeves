@@ -11,7 +11,8 @@
         <ul>
             {% if user_results %}
                 {% for media_item in user_results %}
-                    <li><strong>User: </strong>{{ media_item.first }} {{ media_item.last }}
+                    <li><strong>User: </strong>{{ media_item.first }} {{media.item.last}}
+                    <body>{{media_item.text}}</body>
                 {% endfor %}
             {% else %}  
                 <p>No results...</p>    
