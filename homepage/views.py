@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import Media, Song, Album, Review
+from sleeves.models import Media, Song, Album, Review, SleevesUser, Artist
 
 def home(request):
     top5media = Media.objects.raw(
@@ -88,7 +88,7 @@ def home(request):
     # Get random review
     review = Review.objects.raw(
         f"""
-        SELECT DISTINCT review.spotify_id, review.title, review.user_id, review.star_rating, review.text, album_art
+        SELECT DISTINCT review.spotify_id, review.title, review.user_id, review.star_rating, review.text, album_art, artist_id
         FROM review, album NATURAL JOIN song AS albumsong
         WHERE review.spotify_id = albumsong.album_id OR review.spotify_id = albumsong.song_id
         ORDER BY RAND()
@@ -96,7 +96,34 @@ def home(request):
         """
     )[0]
 
+    review_media = Media.objects.raw(
+        f"""
+        SELECT *
+        FROM media
+        WHERE spotify_id = '{review.spotify_id}';
+        """
+    )[0]
+
+    review_user = SleevesUser.objects.raw(
+        f"""
+        SELECT *
+        FROM sleeves_user
+        WHERE user_id = {review.user_id};
+        """
+    )[0]
+
+    review_artist = Artist.objects.raw(
+        f"""
+        SELECT *
+        FROM artist
+        WHERE artist_id = '{review.artist_id}';
+        """
+    )[0]
+    
     return render(request, "homepage/home.html", {"top5media": top5media, 
                                                   "top5songs":top5songs, 
                                                   "top5songs_albums":top5songs_albums,
-                                                  "review":review})
+                                                  "review":review,
+                                                  "review_media":review_media,
+                                                  "review_user":review_user,
+                                                  "review_artist":review_artist})
