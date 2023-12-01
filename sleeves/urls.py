@@ -19,6 +19,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('media/', include('media_page.urls'), name="media"),
+    path('userProfile/', include('pages.urls'), name="userProfile"),
     path('search/', include('search_media.urls'), name="search"),
     path('create_rating/', include('create_rating.urls'), name="create_rating"),
     path('review/', include('search_media.urls'), name="review"),

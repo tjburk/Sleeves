@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from sleeves.models import Media, SleevesUser
+=======
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse
 from sleeves.models import Media, Artist
+>>>>>>> main
 from .forms import SearchMediaForm
 
 def search_media(request):
@@ -71,14 +73,14 @@ def search_media(request):
 
 def user_search(request):
     if request.method == "POST":
-        search_form = SearchMediaForm(request.POST)
+        search_form = SearchUserForm(request.POST)
 
         if search_form.is_valid():
             search_keyword = search_form.cleaned_data["search_keyword"]
 
             search_results = SleevesUser.objects.raw(
                 f"""
-                    SELECT user_id, first, last
+                    SELECT user_id, sleeves_user.first, sleeves_user.last
                     FROM sleeves_user
                     WHERE CONCAT(first,last) LIKE '%%{search_keyword}%%'
                     OR user_id LIKE '%%{search_keyword}%%'
@@ -89,7 +91,7 @@ def user_search(request):
             return render(request, 'search_media/user.html',
                           {'user_form' : search_form, 'user_results' : search_results})
     else:
-        search_form = SearchMediaForm()
+        search_form = SearchUserForm()
         search_results = SleevesUser.objects.raw(
                 f"""
                     SELECT user_id, first, last 
@@ -97,8 +99,10 @@ def user_search(request):
                 """ 
             )
 
-        return render(request, 'search_media/user.html',
-                            {'user_form' : search_form, 'user_results' : search_results})
+    return render(request, 'search_media/user.html',
+                          {'user_form' : search_form, 'user_results' : search_results})
+=======
     return render(request, 'search_media/search.html',
                 {'search_form': search_form,})
 
+>>>>>>> main
