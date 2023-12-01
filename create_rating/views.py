@@ -39,7 +39,7 @@ def create_rating(request):
                 insert_media(spotify_id, spotify_type, star_rating)
 
             # Then, insert rating into the Rating table
-            success = insert_rating(user.user_id, spotify_id, title, star_rating, text)
+            success = insert_rating(user.id, spotify_id, title, star_rating, text)
 
             return render(request, 'create_rating/create_rating.html',
                 {'rate_form':rate_form, "user":user, "success":success, "init":True})

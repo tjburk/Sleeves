@@ -18,7 +18,7 @@
                     {% elif media_item.type == "track" %}
                         <li><strong>Song: </strong>
                     {% endif %}
-                    <span><a href="{% url 'media_page' media_item.spotify_id%}">{{ media_item.name }} by {{ media_item.artist_name }}</a></span>
+                    <span><a href="{% url 'media_page' media_item.spotify_id%}">{{ media_item.name }}</a> by {{ media_item.artist_name }}</span>
                     <div><strong>Rating: </strong>{{ media_item.overall_rating }}</div>
                     <img src = "{{ media_item.album_art }}">
                     </li>

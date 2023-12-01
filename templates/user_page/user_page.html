@@ -1,0 +1,18 @@
+<html>
+    <head>
+        <title>User</title>
+    </head>
+    <body>
+        {% include 'homepage/navbar.html' %}
+        <input type=button value="Back" onClick="javascript:history.go(-1);">
+        <p>{{user.first}}, {{user.last}}</p>
+        {% if reviews %}
+            {% for media_item in reviews %}
+                <li><strong>{{ media_item.title }}</strong>  {{ media_item.star_rating }}/5</li>
+                    <body> {{ media_item.text }}</body>
+            {% endfor %}
+        {% else %}
+            <p>This user has no reviews...</p>
+        {% endif %}
+    </body>
+</html>
