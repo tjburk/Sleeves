@@ -8,11 +8,11 @@
         {% include 'homepage/navbar.html' %}
 
         <div id="songs-grid">
-            <img class='top-songs' src="../../static/images/bear1.jpeg">
-            <img class='top-songs' src="../../static/images/girl2.jpg">
-            <img class='top-songs' src="../../static/images/random3.jpg">
-            <img class='top-songs' src="../../static/images/forest4.jpg">
-            <img class='top-songs' src="../../static/images/color5.jpg">
+            <span>{{top5media.0.name}}, {{top5media.0.overall_rating}}<img class='top-songs' src="{{top5songs_albums.0.album_art}}"></span>
+            <span>{{top5media.1.name}}, {{top5media.1.overall_rating}}<img class='top-songs' src="{{top5songs_albums.1.album_art}}"></span>
+            <span>{{top5media.2.name}}, {{top5media.2.overall_rating}}<img class='top-songs' src="{{top5songs_albums.2.album_art}}"></span>
+            <span>{{top5media.3.name}}, {{top5media.3.overall_rating}}<img class='top-songs' src="{{top5songs_albums.3.album_art}}"></span>
+            <span>{{top5media.4.name}}, {{top5media.4.overall_rating}}<img class='top-songs' src="{{top5songs_albums.4.album_art}}"></span>
         </div>
 
     </body>
