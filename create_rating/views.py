@@ -23,8 +23,7 @@ def create_rating(request):
             star_rating = rate_form.cleaned_data["star_rating"]
             text = rate_form.cleaned_data["text"]
 
-            # Get the spotify info from the URL
-            spotify_type = spotify_url.split('/')[3]
+            # Get the spotify ID from the URL
             spotify_id = spotify_url.split('/')[4].split('?')[0]
 
             # Insert user into SleevesUser table if it is not already in there
@@ -34,8 +33,8 @@ def create_rating(request):
             user = get_user(firstname, lastname)
             
             # Insert media into Media table if it is not already in there
-            if get_media(spotify_id) is None:
-                insert_media(spotify_id, spotify_type, star_rating)
+            if update_media(spotify_id, star_rating) is None:
+                insert_media(spotify_id, star_rating)
 
             # Then, insert rating into the Rating table
             success = insert_rating(user.user_id, spotify_id, title, star_rating, text)
@@ -92,7 +91,7 @@ def insert_rating(user_id, spotify_id, title, star_rating, text):
             return False
 
 
-def get_media(spotify_id):
+def update_media(spotify_id, star_rating):
     # If media exists, return it
     try:
         media = Media.objects.raw(
@@ -103,6 +102,7 @@ def get_media(spotify_id):
             LIMIT 1;
             """
         )[0]
+        # TODO: Then, update rating
         
     # If it doesn't return None
     except:
@@ -110,7 +110,9 @@ def get_media(spotify_id):
     
     return media
 
-def insert_media(spotify_id, spotify_type, star_rating):
+def insert_media(spotify_id, star_rating):
+    # Helper vars
+    is_album, is_song, is_podcast, is_episode = False, False, False, False
     media = None
 
     # If star_rating is nothing
@@ -118,14 +120,26 @@ def insert_media(spotify_id, spotify_type, star_rating):
         star_rating = "NULL"
 
     # Check for what type the media is
-    if spotify_type == "album":
+    try:
         media = spotify.album(spotify_id)
-    elif spotify_type == "track":
+        is_album = True
+    except:
+        pass
+    try:
         media = spotify.track(spotify_id)
-    elif spotify_type == "episode":
+        is_song = True
+    except:
+        pass
+    try:
         media = spotify.episode(spotify_id)
-    elif spotify_type == "show":
+        is_episode = True
+    except:
+        pass
+    try:
         media = spotify.show(spotify_id)
+        is_podcast = True
+    except:
+        pass
     
     # If no rating previously, insert into media with only rating as overall rating
     with connection.cursor() as cursor:
@@ -135,15 +149,15 @@ def insert_media(spotify_id, spotify_type, star_rating):
             VALUES ("{spotify_id}", {star_rating}, "{media["name"]}", "{media["type"]}");
             """
         )
-    if spotify_type == "track":
+    if(is_song):
         if not get_album(media["album"]["id"]):
             insert_media(media["album"]["id"], None) # recursive call with no rating!
         insert_song(media)
-    if spotify_type == "album":
+    if(is_album):
         insert_album(media)
-    if spotify_type == "episode":
+    if(is_episode):
         print("Add to Episode table")
-    if spotify_type == "show":
+    if(is_podcast):
         print("Add to Podcast table")
 
 

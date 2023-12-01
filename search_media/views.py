@@ -28,6 +28,7 @@ def search_media(request):
     """
         OR spotify_id = podcast.podcast_id 
                 OR (spotify_id = episode_id AND episode.podcast_id = episode.episode_id)
+
                 for when we want podcasts
     """
 
@@ -93,8 +94,5 @@ def user_search(request):
                 """ 
             )
 
-        return render(request, 'search_media/user.html',
-                            {'user_form' : search_form, 'user_results' : search_results})
-    return render(request, 'search_media/search.html',
-                {'search_form': search_form,})
-
+    return render(request, 'search_media/user.html',
+                          {'user_form' : search_form, 'user_results' : search_results})
