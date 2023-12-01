@@ -11,17 +11,17 @@ def search_media(request):
 
         if search_form.is_valid():
             search_keyword = search_form.cleaned_data["search_keyword"]
-            filter = search_form.cleaned_data["filter"]
             order = search_form.cleaned_data["order"]
+            type = search_form.cleaned_data["type"]
 
             search_results = Media.objects.raw(
             f"""
             SELECT DISTINCT media.spotify_id, type, media.name, overall_rating, artist_name, album_type, album_art
             FROM media, album NATURAL JOIN artist, song 
-            WHERE name LIKE '%%{search_keyword}%%'
+            WHERE name LIKE '%%{search_keyword}%%' AND type = '{type}'
             AND (spotify_id = album.album_id 
                 OR (spotify_id = song_id AND album.album_id=song.album_id))
-            ORDER BY {filter} {order}
+            ORDER BY overall_rating {order}
             """
             )
             return render(request, 'search_media/media.html',
