@@ -3,6 +3,7 @@
         <title>Search</title>
     </head>
     <body>
+        {% include 'homepage/navbar.html' %}
         <input type=button value="Back" onClick="javascript:history.go(-1);">
         <form method="post">
             {% csrf_token %}

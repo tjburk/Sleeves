@@ -3,6 +3,7 @@
         <title>Media</title>
     </head>
     <body>
+        {% include 'homepage/navbar.html' %}
         <input type=button value="Back" onClick="javascript:history.go(-1);">
         <h1>{{media.name}} {% if reviews %} : {{media.overall_rating}} Stars {% endif %}</h1>
         <p>By: {{artist.artist_name}}</p>
