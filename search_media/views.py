@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 from django.shortcuts import render
 from sleeves.models import Media, SleevesUser
+=======
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse
+from sleeves.models import Media, Artist
+>>>>>>> main
 from .forms import SearchMediaForm
 
 def search_media(request):
@@ -30,6 +36,7 @@ def search_media(request):
         OR spotify_id = podcast.podcast_id 
                 OR (spotify_id = episode_id AND episode.podcast_id = episode.episode_id)
 
+<<<<<<< HEAD
                 for when we want podcasts
     """
 
@@ -97,3 +104,8 @@ def user_search(request):
 
     return render(request, 'search_media/user.html',
                           {'user_form' : search_form, 'user_results' : search_results})
+=======
+    return render(request, 'search_media/search.html',
+                {'search_form': search_form,})
+
+>>>>>>> main
