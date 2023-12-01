@@ -18,10 +18,10 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path('media/', include('media_page.urls'), name="media"),
-    path('search/', include('search_media.urls'), name="search"),
-    path('create_rating/', include('create_rating.urls'), name="create_rating"),
-    path('user_profile/', include('pages.urls'), name="user_profile"),
-    path('', include('homepage.urls'), name="home"),
+    path('media/', include('media_page.urls')),
+    path('search/', include('search_media.urls')),
+    path('create_rating/', include('create_rating.urls')),
+    path('user_profile/', include('pages.urls')),
+    path('', include('homepage.urls')),
     path('admin/', admin.site.urls),
 ]
