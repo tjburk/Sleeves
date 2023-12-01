@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import Media, Song, Album
+from sleeves.models import Media, Song, Album, Review
 
 def home(request):
     top5media = Media.objects.raw(
@@ -85,6 +85,18 @@ def home(request):
     top5songs = [song1, song2, song3, song4, song5]
     top5songs_albums = [album1, album2, album3, album4, album5]
 
+    # Get random review
+    review = Review.objects.raw(
+        f"""
+        SELECT DISTINCT review.spotify_id, review.title, review.user_id, review.star_rating, review.text, album_art
+        FROM review, album NATURAL JOIN song AS albumsong
+        WHERE review.spotify_id = albumsong.album_id OR review.spotify_id = albumsong.song_id
+        ORDER BY RAND()
+        LIMIT 1;
+        """
+    )[0]
+
     return render(request, "homepage/home.html", {"top5media": top5media, 
                                                   "top5songs":top5songs, 
-                                                  "top5songs_albums":top5songs_albums})
+                                                  "top5songs_albums":top5songs_albums,
+                                                  "review":review})
