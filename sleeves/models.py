@@ -198,9 +198,8 @@ class Review(models.Model):
 
 
 class SleevesUser(models.Model):
-    user_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     first = models.CharField(max_length=40, blank=True, null=True)
-    middle = models.CharField(max_length=40, blank=True, null=True)
     last = models.CharField(max_length=40, blank=True, null=True)
 
     class Meta:

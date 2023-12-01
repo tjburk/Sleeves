@@ -108,7 +108,7 @@ def home(request):
         f"""
         SELECT *
         FROM sleeves_user
-        WHERE user_id = {review.user_id};
+        WHERE id = {review.user_id};
         """
     )[0]
 
