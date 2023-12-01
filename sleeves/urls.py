@@ -21,6 +21,7 @@ urlpatterns = [
     path('media/', include('media_page.urls'), name="media"),
     path('search/', include('search_media.urls'), name="search"),
     path('create_rating/', include('create_rating.urls'), name="create_rating"),
+    path('userProfile/', include('pages.urls'), name="userProfile"),
     path('review/', include('search_media.urls'), name="review"),
     path('user/', include('search_media.urls'), name="user"),
     path('', include('homepage.urls'), name="home"),

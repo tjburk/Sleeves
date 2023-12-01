@@ -15,5 +15,12 @@
             <span>{{top5media.4.name}}, {{top5media.4.overall_rating}}<img class='top-songs' src="{{top5songs_albums.4.album_art}}"></span>
         </div>
 
+        <p>TOP 5 ALBUMS</p>
+        <div id="album-grid">
+            {% for album in bestestalbums %}
+            <span>{{album.name}}, {{album.overall_rating}} <img class='best-album' src ="{{album.album_art}}"></span>
+            {% endfor %}
+        </div>
+
     </body>
 </html>

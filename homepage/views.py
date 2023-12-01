@@ -85,6 +85,17 @@ def home(request):
     top5songs = [song1, song2, song3, song4, song5]
     top5songs_albums = [album1, album2, album3, album4, album5]
 
+    bestest_albums = Album.objects.raw(
+        """
+        SELECT spotify_id, album_id, name, album_art, overall_rating
+        FROM media, album
+        WHERE type = "album" AND media.spotify_id = album.album_id
+        ORDER BY overall_rating DESC
+        LIMIT 5;
+        """
+    )
+
     return render(request, "homepage/home.html", {"top5media": top5media, 
                                                   "top5songs":top5songs, 
-                                                  "top5songs_albums":top5songs_albums})
+                                                  "top5songs_albums":top5songs_albums,
+                                                  "bestestalbums":bestest_albums })
