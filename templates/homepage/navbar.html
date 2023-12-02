@@ -21,9 +21,8 @@
       <li><a class="nav-link scrollto" href="{% url 'search_user' %}">Search Users</a></li>
       {% if user.is_authenticated %}
         <li><a class="nav-link scrollto" href="{% url 'create_rating' %}">Add a Review</a></li>
-      {% endif %}
-      {% if user.is_authenticated %}
         <li><a class="nav-link scrollto" href="{% url 'logout' %}">Logout</a></li>
+        <li><a class="nav-link scrollto" href="{% url 'user_page' user.id %}">{{user.username}}</a></li>
       {% else %}
         <li><a class="nav-link scrollto" href="{% url 'login' %}">Login</a></li>
       {% endif %}
