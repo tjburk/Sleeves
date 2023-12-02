@@ -48,7 +48,7 @@ def insert_rating(user_id, spotify_id, title, star_rating, text):
             cursor.execute(
                 f"""
                 INSERT INTO review
-                VALUES ({user_id}, "{spotify_id}", "{title}", {star_rating}, "{text}");
+                VALUES ("{spotify_id}", "{title}", {star_rating}, "{text}", {user_id});
                 """
             )
             return True

@@ -88,7 +88,7 @@ def home(request):
     # Get random review of either song or album
     review = Review.objects.raw(
         f"""
-        SELECT DISTINCT review.spotify_id, review.title, review.user_id, review.star_rating, review.text, album_art, artist_id
+        SELECT DISTINCT review.spotify_id, review.title, review.auth_id, review.star_rating, review.text, album_art, artist_id
         FROM review, album NATURAL JOIN song AS albumsong
         WHERE review.spotify_id = albumsong.album_id OR review.spotify_id = albumsong.song_id
         ORDER BY RAND()
@@ -108,7 +108,7 @@ def home(request):
         f"""
         SELECT *
         FROM auth_user
-        WHERE id = {review.user_id};
+        WHERE id = {review.auth_id};
         """
     )[0]
     review_artist = Artist.objects.raw(

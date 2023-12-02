@@ -12,7 +12,7 @@
                 <li>
                     <strong>{{ review.title }}</strong>  {{ review.star_rating }} Stars
                     <p>"{{ review.text }}"</p>
-                    <a href="{% url 'delete_review' review.user_id review.spotify_id review.title %}">Delete Review</a>
+                    <a href="{% url 'delete_review' review.auth_id review.spotify_id review.title %}">Delete Review</a>
                     <br><br>
                 </li>
             {% endfor %}

@@ -13,10 +13,10 @@ def user_page(request, user_id):
 
     user_reviews = Review.objects.raw(
         f"""
-        SELECT title, text, star_rating, auth_user.id, review.user_id, spotify_id
+        SELECT title, text, star_rating, auth_user.id, review.auth_id, spotify_id
         FROM auth_user, review 
         WHERE auth_user.id = {user_id}
-        AND review.user_id = {user_id};
+        AND review.auth_id = {user_id};
         """
     )
 
@@ -29,7 +29,7 @@ def delete_review(request, user_id, spotify_id, title):
         cursor.execute(
             f"""
             DELETE FROM review
-            WHERE user_id = {user_id} AND spotify_id = "{spotify_id}" AND title = "{title}";
+            WHERE auth_id = {user_id} AND spotify_id = "{spotify_id}" AND title = "{title}";
             """
         )
     

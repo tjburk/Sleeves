@@ -54,7 +54,7 @@ def search_user(request):
             search_results = AuthUser.objects.raw(
                 f"""
                     SELECT *
-                    FROM sleeves_user
+                    FROM auth_user
                     WHERE username LIKE '%%{search_keyword}%%'
                 """
             )

@@ -201,15 +201,16 @@ class Podcast(models.Model):
 
 
 class Review(models.Model):
-    spotify = models.ForeignKey(Media, models.DO_NOTHING)
+    spotify = models.OneToOneField(Media, models.DO_NOTHING, primary_key=True)  # The composite primary key (spotify_id, title, auth_id) found, that is not supported. The first column is selected.
     title = models.CharField(max_length=40)
     star_rating = models.FloatField(blank=True, null=True)
     text = models.CharField(max_length=1000, blank=True, null=True)
-    auth = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
+    auth = models.ForeignKey(AuthUser, models.DO_NOTHING)
 
     class Meta:
         managed = False
         db_table = 'review'
+        unique_together = (('spotify', 'title', 'auth'),)
 
 
 class Song(models.Model):
