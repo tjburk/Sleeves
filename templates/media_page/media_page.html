@@ -5,9 +5,15 @@
     <body>
         {% include 'homepage/navbar.html' %}
         <input type=button value="Back" onClick="javascript:history.go(-1);">
+
         <h1>{{media.name}} {% if reviews %} : {{media.overall_rating}} Stars {% endif %}</h1>
-        <p>By: {{artist.artist_name}}</p>
-        <img src={{album.album_art}}>
+        {% if album or song %}
+            <p>By: {{artist.artist_name}}</p>
+            <img src={{album.album_art}}>
+        {% elif podcast or episode %}
+            <p>By: {{podcast.producer}}</p>
+            <img src={{podcast.image}}>
+        {% endif %}
         <h2>Reviews</h2>
         {% if reviews %}
             {% for review in reviews %}

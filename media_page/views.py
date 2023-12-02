@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import Media, Album, Song, Artist, Review
+from sleeves.models import Media, Album, Song, Artist, Review, Podcast, Episode
 
 def media_view(request, spotify_id):
     media_object = Media.objects.raw(
@@ -14,6 +14,8 @@ def media_view(request, spotify_id):
     # Set defualts to none
     album_object = None
     song_object = None
+    podcast_object = None
+    episode_object = None
     artist_object = None
     
     # Get Song and Album if it's a song
@@ -57,7 +59,39 @@ def media_view(request, spotify_id):
         LIMIT 1;
         """
         )[0]
+
+    # Get Podcast and Episode if it's an episode
+    if media_object.type == "episode":
+        episode_object = Episode.objects.raw(
+        f"""
+        SELECT *
+        FROM episode
+        WHERE episode_id = '{spotify_id}'
+        LIMIT 1;
+        """
+        )[0]
+
+        podcast_object = Podcast.objects.raw(
+        f"""
+        SELECT *
+        FROM podcast
+        WHERE podcast_id = '{episode_object.podcast_id}'
+        LIMIT 1;
+        """
+        )[0]
     
+    # Only get podcast if it's an podcast
+    elif media_object.type == "show":
+        podcast_object = Podcast.objects.raw(
+        f"""
+        SELECT *
+        FROM podcast
+        WHERE podcast_id = '{spotify_id}'
+        LIMIT 1;
+        """
+        )[0]
+    
+    # get reviews
     reviews = Review.objects.raw(
         f"""
         SELECT *
@@ -67,4 +101,4 @@ def media_view(request, spotify_id):
         )
     
     return render(request, 'media_page/media_page.html',
-        {'album': album_object, 'song':song_object, 'artist':artist_object, 'media': media_object, 'reviews':reviews})
+        {'album': album_object, 'song':song_object, 'podcast': podcast_object, 'epsiode':episode_object, 'artist':artist_object, 'media': media_object, 'reviews':reviews})
