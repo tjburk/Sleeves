@@ -3,13 +3,7 @@ from sleeves.models import AuthUser, Review
 from django.db import connection
 
 def user_page(request, user_id):
-    user_object  = AuthUser.objects.raw(
-    f"""
-    SELECT *
-    FROM auth_user
-    WHERE id = '{user_id}'
-    """
-    )[0]
+    current_user = request.user
 
     user_reviews = Review.objects.raw(
         f"""
@@ -21,7 +15,7 @@ def user_page(request, user_id):
     )
 
     return render(request, 'user_page/user_page.html',
-                          {'user' : user_object, 'reviews' : user_reviews})
+                          {'reviews' : user_reviews})
 
 
 def delete_review(request, user_id, spotify_id, title):
