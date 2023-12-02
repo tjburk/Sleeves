@@ -13,7 +13,7 @@
         <ul>
             {% if user_results %}
                 {% for user in user_results %}
-                    <li><strong>User: </strong><a href="{% url 'user_page' user.id %}">{{ user.first }} {{ user.last}}</a>
+                    <li><strong>User: </strong><a href="{% url 'user_page' user.id %}">{{ user.username }}</a>
                 {% endfor %}
             {% else %}  
                 <p>No results...</p>    

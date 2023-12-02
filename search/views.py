@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import Media, SleevesUser
+from sleeves.models import Media, AuthUser
 from .forms import SearchMediaForm, SearchUserForm
 
 def search_media(request):
@@ -43,36 +43,6 @@ def search_media(request):
     return render(request, 'search/media.html',
                 {'search_form': search_form,})
 
-# def view_reviews(request):
-#     if request.method == "POST":
-#         search_form = SearchMediaForm(request.POST)
-
-#         if search_form.is_valid():
-#             search_keyword = search_form.cleaned_data["search_keyword"]
-
-#             search_results = Media.objects.raw(
-#                 f"""
-#                     SELECT DISTINCT first, last , review.spotify_id, name, title, star_rating, text
-#                     FROM review NATURAL JOIN sleeves_user, media
-#                     WHERE name LIKE '%%{search_keyword}%%' and review.spotify_id = media.spotify_id
-#                 """
-#             )
-#             return render(request, 'search_media/review.html',
-#                           {'review_form' : search_form, 'review_results' : search_results})
-#     else:
-#         search_form = SearchMediaForm()
-#         search_results = Media.objects.raw(
-#                 f"""
-#                     SELECT DISTINCT first, last , review.spotify_id, name, title, star_rating, text
-#                     FROM review NATURAL JOIN sleeves_user, media    
-#                     WHERE review.spotify_id = media.spotify_id
-#                     ORDER BY star_rating DESC
-#                 """
-#             )
-
-#     return render(request, 'search_media/review.html',
-#                           {'review_form' : search_form, 'review_results' : search_results})
-
 
 def search_user(request):
     if request.method == "POST":
@@ -81,25 +51,17 @@ def search_user(request):
         if search_form.is_valid():
             search_keyword = search_form.cleaned_data["search_keyword"]
 
-            search_results = SleevesUser.objects.raw(
+            search_results = AuthUser.objects.raw(
                 f"""
-                    SELECT id, first, last
+                    SELECT *
                     FROM sleeves_user
-                    WHERE CONCAT(first,last) LIKE '%%{search_keyword}%%'
-                    OR first LIKE '%%{search_keyword}%%'
-                    OR last LIKE '%%{search_keyword}%%'
+                    WHERE username LIKE '%%{search_keyword}%%'
                 """
             )
             return render(request, 'search/user.html',
                           {'user_form' : search_form, 'user_results' : search_results})
     else:
         search_form = SearchUserForm()
-        search_results = SleevesUser.objects.raw(
-                f"""
-                    SELECT id, first, last 
-                    FROM sleeves_user
-                """ 
-            )
 
     return render(request, 'search/user.html',
                     {'user_form' : search_form})

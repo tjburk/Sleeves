@@ -1,21 +1,21 @@
 from django.shortcuts import render
-from sleeves.models import SleevesUser, Review
+from sleeves.models import AuthUser, Review
 from django.db import connection
 
 def user_page(request, user_id):
-    user_object  = SleevesUser.objects.raw(
+    user_object  = AuthUser.objects.raw(
     f"""
     SELECT *
-    FROM sleeves_user
+    FROM auth_user
     WHERE id = '{user_id}'
     """
     )[0]
 
     user_reviews = Review.objects.raw(
         f"""
-        SELECT title, text, star_rating, sleeves_user.id, review.user_id, spotify_id
-        FROM sleeves_user, review 
-        WHERE sleeves_user.id = {user_id}
+        SELECT title, text, star_rating, auth_user.id, review.user_id, spotify_id
+        FROM auth_user, review 
+        WHERE auth_user.id = {user_id}
         AND review.user_id = {user_id};
         """
     )

@@ -14,7 +14,7 @@
 
         {% if init %}
             {% if success %}
-                <p>Rating created by {{user.first}}, {{user.last}}</p>
+                <p>Rating created by {{user.username}}</p>
             {% else %}
                 <p>There was a problem creating your review... Is it a duplicate?</p>
             {% endif %}

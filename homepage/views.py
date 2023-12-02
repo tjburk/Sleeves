@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import Media, Song, Album, Review, SleevesUser, Artist
+from sleeves.models import Media, Song, Album, Review, AuthUser, Artist
 
 def home(request):
     top5media = Media.objects.raw(
@@ -104,10 +104,10 @@ def home(request):
         """
     )[0]
 
-    review_user = SleevesUser.objects.raw(
+    review_user = AuthUser.objects.raw(
         f"""
         SELECT *
-        FROM sleeves_user
+        FROM auth_user
         WHERE id = {review.user_id};
         """
     )[0]

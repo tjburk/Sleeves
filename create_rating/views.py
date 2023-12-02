@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import SleevesUser, Media, Album, Artist, Genre, Podcast
+from sleeves.models import AuthUser, Media, Album, Artist, Genre, Podcast
 from .forms import RateForm
 from django.db import connection
 from django.conf import settings
@@ -16,8 +16,6 @@ def create_rating(request):
 
         if rate_form.is_valid():
             # Get data from form
-            firstname = rate_form.cleaned_data["firstname"]
-            lastname = rate_form.cleaned_data["lastname"]
             spotify_url = rate_form.cleaned_data["spotify_url"]
             title = rate_form.cleaned_data["title"]
             star_rating = rate_form.cleaned_data["star_rating"]
@@ -26,53 +24,21 @@ def create_rating(request):
             # Get the spotify ID from the URL
             spotify_type = spotify_url.split('/')[3]
             spotify_id = spotify_url.split('/')[4].split('?')[0]
-            print(spotify_id)
-            
-            # Get user from AuthUser table
-            user = get_user(firstname, lastname)
             
             # Insert media into Media table if it is not already in there
             if get_media(spotify_id) is None:
                 insert_media(spotify_id, spotify_type, star_rating)
 
             # Then, insert rating into the Rating table
-            success = insert_rating(user.id, spotify_id, title, star_rating, text)
+            success = insert_rating(request.user.id, spotify_id, title, star_rating, text)
 
             return render(request, 'create_rating/create_rating.html',
-                {'rate_form':rate_form, "user":user, "success":success, "init":True})
+                {'rate_form':rate_form, "user":request.user, "success":success, "init":True})
     else:
         rate_form = RateForm()
 
     return render(request, 'create_rating/create_rating.html', 
                 {'rate_form': rate_form, "init":False})
-
-
-def get_user(username):
-    # If user exists, return it
-    try:
-        user = SleevesUser.objects.raw(
-            f"""
-            SELECT *
-            FROM auth_user
-            WHERE username = '{username}'
-            LIMIT 1;
-            """
-        )[0]
-    # If it doesn't return None
-    except:
-        user = None
-    
-    return user
-
-
-def insert_user(firstname, lastname):
-    with connection.cursor() as cursor:
-        cursor.execute(
-            f"""
-            INSERT INTO sleeves_user (first, last)
-            VALUES ("{firstname}", "{lastname}");
-            """
-        )
 
 
 def insert_rating(user_id, spotify_id, title, star_rating, text):
