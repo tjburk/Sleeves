@@ -3,12 +3,14 @@ from sleeves.models import AuthUser, Media, Album, Artist, Genre, Podcast
 from .forms import RateForm
 from django.db import connection
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
 client_credentials_manager = SpotifyClientCredentials(client_id=settings.SPOTIPY_CLIENT_ID, client_secret=settings.SPOTIPY_CLIENT_SECRET)
 spotify = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
 
+@login_required(login_url="/auth/login")
 def create_rating(request):
     # Process form
     if request.method == "POST":
