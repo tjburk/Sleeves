@@ -10,7 +10,7 @@ class SearchMediaForm(forms.Form):
     ('', 'None'),
     ('track', 'Song'),
     ('album', 'Album'),
-    ('podcast', 'Podcast'),
+    ('show', 'Podcast'),
     ('episode', 'Episode'),
     ]
 
