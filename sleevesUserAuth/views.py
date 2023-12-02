@@ -1,14 +1,7 @@
 from django.shortcuts import render, redirect
-from sleeves.models import SleevesUser, Review
-from django.http import HttpResponseRedirect
-from django.urls import reverse
-
-# Create your views here.
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
-from .models import LoginForm
-from django.contrib import messages
-
+from .forms import LoginForm
 
 
 def user_login(request):
