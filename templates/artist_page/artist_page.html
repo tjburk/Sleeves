@@ -3,15 +3,10 @@
         <title>Sleeves</title>
     </head>
     <body>
-        <form method="post">
-            {% csrf_token %}
-            {{ filter_form }}
-            <input type="submit" value="Submit">
-        </form>
-        <ul>
-        {% for media_item in media_list %}
-            <li><strong>Title: </strong>{{ media_item.title }},  <br><strong>Rating: </strong>{{ media_item.overall_rating }}</li>
-        {% endfor %}
-        </ul>
+        {% include 'homepage/navbar.html' %}
+        <input type=button value="Back" onClick="javascript:history.go(-1);">
+
+        <h1>{{artist.artist_name}}</h1>
+        <img src="{{artist.image}}">
     </body>
 </html>
