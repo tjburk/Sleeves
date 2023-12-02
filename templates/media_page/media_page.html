@@ -9,13 +9,33 @@
         <h1>{{media.name}}</h1>
         {% if album or song %}
             <h3> - <a href="{% url 'artist_page' artist.artist_id %}">{{artist.artist_name}}</a></h3>
-            <p>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</p>
+            <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
             <img src={{album.album_art}}>
         {% elif podcast or episode %}
             <h3> - {{podcast.producer}}</h3>
-            <p>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</p>
+            <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
             <img src={{podcast.image}}>
         {% endif %}
+
+
+        <h2>Info</h2>
+        {% if song %}
+            <div><strong>Tempo: </strong>{{song.tempo}}</div>
+            <div><strong>Key: </strong>{{song_key}}</div>
+            <div><strong>Loudness: </strong>{{song.loudness}}dB</div>
+            <div><strong>Length: </strong>{% widthratio song.length 1000 1 %} seconds</div>
+        {% elif album %}
+            <div><strong>Album Type: </strong>{{album.album_type.capitalize}}</div>
+            <div><strong>Record Label: </strong>{{album.record_label}}</div>
+        {% elif episode %}
+            <div><strong>Synopsis: </strong>{{episode.synopsis}}</div>
+            <div><strong>Release Date: </strong>{{episode.release_date}}</div>
+            <div><strong>Length: </strong>{% widthratio episode.length 1000 1 %} seconds</div>
+        {% elif podcast %}
+            <div><strong>Description: </strong>{{podcast.description}}</div>
+        {% endif %}
+
+        
         <h2>Reviews</h2>
         {% if reviews %}
             {% for review in reviews %}

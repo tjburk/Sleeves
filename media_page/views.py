@@ -17,6 +17,7 @@ def media_view(request, spotify_id):
     podcast_object = None
     episode_object = None
     artist_object = None
+    song_key = None
     
     # Get Song and Album if it's a song
     if media_object.type == "track":
@@ -37,6 +38,10 @@ def media_view(request, spotify_id):
         LIMIT 1;
         """
         )[0]
+
+        # get song key
+        key_dict = {"1": "C", "2": "C#", "3": "D", "4": "D#", "5": "E", "6":"F", "7":"F#", "8":"G", "9":"G#", "10":"A", "11":"A#", "12":"B"}
+        song_key = key_dict[song_object.song_key]
     
     # Only get album if it's an album
     elif media_object.type == "album":
@@ -101,4 +106,4 @@ def media_view(request, spotify_id):
         )
     
     return render(request, 'media_page/media_page.html',
-        {'album': album_object, 'song':song_object, 'podcast': podcast_object, 'epsiode':episode_object, 'artist':artist_object, 'media': media_object, 'reviews':reviews})
+        {'album': album_object, 'song':song_object, 'song_key':song_key, 'podcast': podcast_object, 'episode':episode_object, 'artist':artist_object, 'media': media_object, 'reviews':reviews})
