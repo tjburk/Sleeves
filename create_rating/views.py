@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from sleeves.models import SleevesUser, Media, Album, Artist, Genre
+from sleeves.models import SleevesUser, Media, Album, Artist, Genre, Podcast
 from .forms import RateForm
 from django.db import connection
 from django.conf import settings
@@ -39,7 +39,7 @@ def create_rating(request):
                 insert_media(spotify_id, spotify_type, star_rating)
 
             # Then, insert rating into the Rating table
-            success = insert_rating(user.user_id, spotify_id, title, star_rating, text)
+            success = insert_rating(user.id, spotify_id, title, star_rating, text)
 
             return render(request, 'create_rating/create_rating.html',
                 {'rate_form':rate_form, "user":user, "success":success, "init":True})
@@ -125,7 +125,7 @@ def insert_media(spotify_id, spotify_type, star_rating):
     elif spotify_type == "track":
         media = spotify.track(spotify_id)
     elif spotify_type == "episode":
-        media = spotify.episode(spotify_id)
+        media = spotify.episode(spotify_id, market="US")
     elif spotify_type == "show":
         media = spotify.show(spotify_id)
     
@@ -144,9 +144,11 @@ def insert_media(spotify_id, spotify_type, star_rating):
     elif spotify_type == "album":
         insert_album(media)
     elif spotify_type == "episode":
-        print("Add to Episode table")
+        if not get_podcast(media["show"]["id"]):
+            insert_media(media["show"]["id"], "show", None) # recursive call with no rating!
+        insert_episode(media)
     elif spotify_type == "show":
-        print("Add to Podcast table")
+        insert_podcast(media)
 
 
 def get_album(album_id):
@@ -288,5 +290,56 @@ def insert_song(song):
             f"""
             INSERT INTO song (song_id, tempo, song_key, loudness, album_id, length)
             VALUES ("{song_id}", {tempo}, "{key}", {loudness}, "{album_id}", {length});
+            """
+        )
+
+def insert_episode(episode):
+    # Get params for SQL
+    episode_id = episode["id"]
+    release_date = episode["release_date"]
+    synopsis = episode["description"]
+    podcast_id = episode["show"]["id"]
+    length = episode["duration_ms"]
+
+    # Insert into table
+    with connection.cursor() as cursor:
+        cursor.execute(
+            f"""
+            INSERT INTO episode (episode_id, release_date, synopsis, podcast_id, length)
+            VALUES ("{episode_id}", "{release_date}", "{synopsis}", "{podcast_id}", {length});
+            """
+        )
+
+def get_podcast(podcast_id):
+    # If album exists, return it
+    try:
+        podcast = Podcast.objects.raw(
+            f"""
+            SELECT *
+            FROM podcast
+            WHERE podcast_id = '{podcast_id}'
+            LIMIT 1;
+            """
+        )[0]
+        
+    # If it doesn't return None
+    except:
+        podcast = None
+    
+    return podcast
+
+def insert_podcast(podcast):
+    # Get params for SQL
+    podcast_id = podcast["id"]
+    description = podcast["description"]
+    producer = podcast["publisher"]
+    image = podcast["images"][0]["url"]
+
+    # Insert into table
+    with connection.cursor() as cursor:
+        cursor.execute(
+            f"""
+            INSERT INTO podcast (podcast_id, description, producer, image)
+            VALUES ("{podcast_id}", "{description}", "{producer}", "{image}");
             """
         )

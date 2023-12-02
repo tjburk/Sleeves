@@ -85,7 +85,7 @@ def home(request):
     top5songs = [song1, song2, song3, song4, song5]
     top5songs_albums = [album1, album2, album3, album4, album5]
 
-    # Get random review
+    # Get random review of either song or album
     review = Review.objects.raw(
         f"""
         SELECT DISTINCT review.spotify_id, review.title, review.user_id, review.star_rating, review.text, album_art, artist_id
@@ -108,10 +108,9 @@ def home(request):
         f"""
         SELECT *
         FROM sleeves_user
-        WHERE user_id = {review.user_id};
+        WHERE id = {review.user_id};
         """
     )[0]
-
     review_artist = Artist.objects.raw(
         f"""
         SELECT *
@@ -120,7 +119,7 @@ def home(request):
         """
     )[0]
     
-
+    # Get top 5 albums
     bestest_albums = Album.objects.raw(
         """
         SELECT spotify_id, album_id, name, album_art, overall_rating

@@ -18,11 +18,12 @@ from django.urls import include, path
 
 
 urlpatterns = [
-    path('media/', include('media_page.urls'), name="media"),
-    path('search/', include('search_media.urls'), name="search"),
-    path('create_rating/', include('create_rating.urls'), name="create_rating"),
-    path('userProfile/', include('pages.urls'), name="userProfile"),
-    path('', include('homepage.urls'), name="home"),
+    path('', include('homepage.urls')),
+    path('media/', include('media_page.urls')),
+    path('artist/', include('artist_page.urls')),
+    path('search/', include('search.urls')),
+    path('create_rating/', include('create_rating.urls')),
+    path('user_profile/', include('user_page.urls')),
     path('admin/', admin.site.urls),
     path('auth/', include('sleevesUserAuth.urls'), name='auth')
 ]

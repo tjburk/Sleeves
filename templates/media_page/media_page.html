@@ -5,9 +5,17 @@
     <body>
         {% include 'homepage/navbar.html' %}
         <input type=button value="Back" onClick="javascript:history.go(-1);">
-        <h1>{{media.name}} {% if reviews %} : {{media.overall_rating}} Stars {% endif %}</h1>
-        <p>By: {{artist.artist_name}}</p>
-        <img src={{album.album_art}}>
+
+        <h1>{{media.name}}</h1>
+        {% if album or song %}
+            <h3> - <a href="{% url 'artist_page' artist.artist_id %}">{{artist.artist_name}}</a></h3>
+            <p>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</p>
+            <img src={{album.album_art}}>
+        {% elif podcast or episode %}
+            <h3> - {{podcast.producer}}</h3>
+            <p>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</p>
+            <img src={{podcast.image}}>
+        {% endif %}
         <h2>Reviews</h2>
         {% if reviews %}
             {% for review in reviews %}
@@ -16,7 +24,7 @@
                 <div>- {{review.star_rating}} Stars</div><br>
             {% endfor %}
         {% else %}
-            <p>No reivews yet!</p>
+            <p>No reviews yet!</p>
         {% endif %}
     </body>
 </html>

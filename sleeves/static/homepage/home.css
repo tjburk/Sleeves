@@ -5,7 +5,18 @@
   gap: 50px;
 }
 
+#albums-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 50px;
+}
+
 .top-songs {
     width: 100%;
     height: auto;
+}
+
+.top-albums {
+  width: 100%;
+  height: auto;
 }

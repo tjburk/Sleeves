@@ -1,0 +1,12 @@
+<html>
+    <head>
+        <title>Sleeves</title>
+    </head>
+    <body>
+        {% include 'homepage/navbar.html' %}
+        <input type=button value="Back" onClick="javascript:history.go(-1);">
+
+        <h1>{{artist.artist_name}}</h1>
+        <img src="{{artist.image}}">
+    </body>
+</html>

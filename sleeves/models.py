@@ -200,8 +200,7 @@ class Review(models.Model):
 
 
 class SleevesUser(models.Model):
-    user_id = models.IntegerField(primary_key=True)
-    username = models.CharField(max_length=30, unique=True)
+    id = models.AutoField(primary_key=True)
     first = models.CharField(max_length=40, blank=True, null=True)
     last = models.CharField(max_length=40, blank=True, null=True)
 
