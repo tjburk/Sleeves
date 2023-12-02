@@ -125,7 +125,7 @@ def insert_media(spotify_id, spotify_type, star_rating):
     elif spotify_type == "track":
         media = spotify.track(spotify_id)
     elif spotify_type == "episode":
-        media = spotify.episode(spotify_id)
+        media = spotify.episode(spotify_id, market="US")
     elif spotify_type == "show":
         media = spotify.show(spotify_id)
     
