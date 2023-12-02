@@ -18,6 +18,11 @@ def user_login(request):
         form = LoginForm()
     return render(request, 'sleevesUserAuth/login.html', {'form':form})
 
+def user_logout(request):
+    logout(request)
+    return redirect("/")
+
+
 
 def register_user(request):
     if request.method == 'POST':
