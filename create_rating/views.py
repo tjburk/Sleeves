@@ -27,11 +27,8 @@ def create_rating(request):
             spotify_type = spotify_url.split('/')[3]
             spotify_id = spotify_url.split('/')[4].split('?')[0]
             print(spotify_id)
-
-            # Insert user into SleevesUser table if it is not already in there
-            if get_user(firstname, lastname) is None:
-                insert_user(firstname, lastname)
             
+            # Get user from AuthUser table
             user = get_user(firstname, lastname)
             
             # Insert media into Media table if it is not already in there

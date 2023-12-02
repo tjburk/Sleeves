@@ -1,22 +1,31 @@
 from django.db import models
-from django.utils import timezone
-from django.contrib.auth.models import User
 
 class Album(models.Model):
     album = models.OneToOneField('Media', models.DO_NOTHING, primary_key=True)
     album_type = models.CharField(max_length=200, blank=True, null=True)
     album_art = models.CharField(max_length=200, blank=True, null=True)
     record_label = models.CharField(max_length=200, blank=True, null=True)
+    artist = models.ForeignKey('Artist', models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'album'
 
 
+class AlbumHasGenre(models.Model):
+    genre = models.ForeignKey('Genre', models.DO_NOTHING)
+    album = models.OneToOneField('Media', models.DO_NOTHING, primary_key=True)  # The composite primary key (album_id, genre_id) found, that is not supported. The first column is selected.
+
+    class Meta:
+        managed = False
+        db_table = 'album_has_genre'
+        unique_together = (('album', 'genre'),)
+
+
 class Artist(models.Model):
     artist_id = models.CharField(primary_key=True, max_length=50)
     artist_name = models.CharField(max_length=200, blank=True, null=True)
-    bio = models.CharField(max_length=1000, blank=True, null=True)
+    image = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -140,12 +149,24 @@ class DjangoSession(models.Model):
 class Episode(models.Model):
     episode = models.OneToOneField('Media', models.DO_NOTHING, primary_key=True)
     release_date = models.DateField(blank=True, null=True)
-    synopsis = models.CharField(max_length=1000, blank=True, null=True)
+    synopsis = models.CharField(max_length=10000, blank=True, null=True)
     podcast = models.ForeignKey('Media', models.DO_NOTHING, related_name='episode_podcast_set', blank=True, null=True)
+    length = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'episode'
+
+
+class FilterMediaArtist(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    artist_id = models.CharField(max_length=50)
+    artist_name = models.CharField(max_length=200)
+    bio = models.CharField(max_length=1000)
+
+    class Meta:
+        managed = False
+        db_table = 'filter_media_artist'
 
 
 class Genre(models.Model):
@@ -160,26 +181,19 @@ class Genre(models.Model):
 class Media(models.Model):
     spotify_id = models.CharField(primary_key=True, max_length=50)
     overall_rating = models.FloatField(blank=True, null=True)
+    name = models.CharField(max_length=50, blank=True, null=True)
+    type = models.CharField(max_length=100, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'media'
 
 
-class MediaHasGenre(models.Model):
-    genre = models.ForeignKey(Genre, models.DO_NOTHING)
-    media = models.OneToOneField(Media, models.DO_NOTHING, primary_key=True)  # The composite primary key (media_id, genre_id) found, that is not supported. The first column is selected.
-
-    class Meta:
-        managed = False
-        db_table = 'media_has_genre'
-        unique_together = (('media', 'genre'),)
-
-
 class Podcast(models.Model):
     podcast = models.OneToOneField(Media, models.DO_NOTHING, primary_key=True)
     description = models.CharField(max_length=1000, blank=True, null=True)
     producer = models.CharField(max_length=40, blank=True, null=True)
+    image = models.CharField(max_length=200, blank=True, null=True)
 
     class Meta:
         managed = False
@@ -187,26 +201,15 @@ class Podcast(models.Model):
 
 
 class Review(models.Model):
-    user = models.OneToOneField('SleevesUser', models.DO_NOTHING, primary_key=True)  # The composite primary key (user_id, spotify_id, title) found, that is not supported. The first column is selected.
     spotify = models.ForeignKey(Media, models.DO_NOTHING)
     title = models.CharField(max_length=40)
     star_rating = models.FloatField(blank=True, null=True)
     text = models.CharField(max_length=1000, blank=True, null=True)
+    auth = models.ForeignKey(AuthUser, models.DO_NOTHING, blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'review'
-        unique_together = (('user', 'spotify', 'title'),)
-
-
-class SleevesUser(models.Model):
-    id = models.AutoField(primary_key=True)
-    first = models.CharField(max_length=40, blank=True, null=True)
-    last = models.CharField(max_length=40, blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'sleeves_user'
 
 
 class Song(models.Model):
@@ -214,19 +217,9 @@ class Song(models.Model):
     tempo = models.IntegerField(blank=True, null=True)
     song_key = models.CharField(max_length=200, blank=True, null=True)
     loudness = models.IntegerField(blank=True, null=True)
-    album = models.ForeignKey(Media, models.DO_NOTHING, related_name='song_album_set', blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'song'
-
-
-class Spotify(models.Model):
-    spotify = models.OneToOneField(Media, models.DO_NOTHING, primary_key=True)
-    title = models.CharField(max_length=200, blank=True, null=True)
-    spotify_artist = models.ForeignKey(Artist, models.DO_NOTHING, blank=True, null=True)
+    album_id = models.CharField(max_length=50, blank=True, null=True)
     length = models.IntegerField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'spotify'
+        db_table = 'song'
