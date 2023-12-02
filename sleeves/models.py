@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils import timezone
+from django.contrib.auth.models import User
 
 class Album(models.Model):
     album = models.OneToOneField('Media', models.DO_NOTHING, primary_key=True)
@@ -198,9 +200,9 @@ class Review(models.Model):
 
 
 class SleevesUser(models.Model):
-    user_id = models.AutoField(primary_key=True)
+    user_id = models.IntegerField(primary_key=True)
+    username = models.CharField(max_length=30, unique=True)
     first = models.CharField(max_length=40, blank=True, null=True)
-    middle = models.CharField(max_length=40, blank=True, null=True)
     last = models.CharField(max_length=40, blank=True, null=True)
 
     class Meta:

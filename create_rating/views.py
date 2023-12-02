@@ -50,14 +50,14 @@ def create_rating(request):
                 {'rate_form': rate_form, "init":False})
 
 
-def get_user(firstname, lastname):
+def get_user(username):
     # If user exists, return it
     try:
         user = SleevesUser.objects.raw(
             f"""
             SELECT *
-            FROM sleeves_user
-            WHERE first = '{firstname}' AND last = '{lastname}'
+            FROM auth_user
+            WHERE username = '{username}'
             LIMIT 1;
             """
         )[0]

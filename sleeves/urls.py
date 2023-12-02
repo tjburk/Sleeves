@@ -24,4 +24,5 @@ urlpatterns = [
     path('userProfile/', include('pages.urls'), name="userProfile"),
     path('', include('homepage.urls'), name="home"),
     path('admin/', admin.site.urls),
+    path('auth/', include('sleevesUserAuth.urls'), name='auth')
 ]

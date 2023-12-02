@@ -6,17 +6,17 @@ def user_page(request, user_id):
     user_object  = SleevesUser.objects.raw(
     f"""
     SELECT *
-    FROM sleeves_user
-    WHERE user_id = '{user_id}'
+    FROM auth_user
+    WHERE id = '{user_id}'
     """
     )[0]
 
     user_reviews = Review.objects.raw(
         f"""
-        SELECT title, text, star_rating, sleeves_user.user_id 
-        FROM sleeves_user, review 
-        WHERE sleeves_user.user_id = '{user_id}'
-        AND review.user_id = '{user_id}';
+        SELECT title, text, star_rating, id
+        FROM auth_user, review 
+        WHERE id = '{user_id}'
+        AND review.auth_id = '{user_id}';
         """
     )
 
