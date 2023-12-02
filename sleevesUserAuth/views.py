@@ -24,7 +24,9 @@ def register_user(request):
         form = UserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-        return redirect("/")
+            return redirect("/")
+        else: 
+            return render(request, 'sleevesUserAuth/signUp.html', {"form":form})
     else:
         form = UserCreationForm()
         return render(request, 'sleevesUserAuth/signUp.html', {"form":form})

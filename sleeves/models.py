@@ -71,6 +71,8 @@ class AuthUser(models.Model):
     is_staff = models.IntegerField()
     is_active = models.IntegerField()
     date_joined = models.DateTimeField()
+    first_name = models.CharField(max_length=50, default=None)
+    last_name = models.CharField(max_length=50, default=None)
 
     class Meta:
         managed = False
