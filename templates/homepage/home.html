@@ -28,7 +28,7 @@
             <img src="{{review.album_art}}"></span>
             <div><strong>{{review.title}}</strong>- {{review.star_rating}} Stars</div>
             <div>{{review.text}}</div>
-            <div>- {{review_user.username}}</div>
+            <div>- <a href="{% url 'user_page' review_user.id %}">{{review_user.username}}</a></div>
         </div>
 
     </body>
