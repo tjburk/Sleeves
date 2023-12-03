@@ -24,15 +24,19 @@
             <div><strong>Key: </strong>{{song_key}}</div>
             <div><strong>Loudness: </strong>{{song.loudness}}dB</div>
             <div><strong>Length: </strong>{% widthratio song.length 1000 1 %} seconds</div>
+            <div><a href="https://open.spotify.com/track/{{media.spotify_id}}">Spotify</a></div>
         {% elif album %}
             <div><strong>Album Type: </strong>{{album.album_type.capitalize}}</div>
             <div><strong>Record Label: </strong>{{album.record_label}}</div>
+            <div><a href="https://open.spotify.com/album/{{media.spotify_id}}">Spotify</a></div>
         {% elif episode %}
             <div><strong>Synopsis: </strong>{{episode.synopsis}}</div>
             <div><strong>Release Date: </strong>{{episode.release_date}}</div>
             <div><strong>Length: </strong>{% widthratio episode.length 1000 1 %} seconds</div>
+            <div><a href="https://open.spotify.com/episode/{{media.spotify_id}}">Spotify</a></div>
         {% elif podcast %}
             <div><strong>Description: </strong>{{podcast.description}}</div>
+            <div><a href="https://open.spotify.com/show/{{media.spotify_id}}">Spotify</a></div>
         {% endif %}
 
         
