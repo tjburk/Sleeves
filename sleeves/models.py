@@ -158,17 +158,6 @@ class Episode(models.Model):
         db_table = 'episode'
 
 
-class FilterMediaArtist(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    artist_id = models.CharField(max_length=50)
-    artist_name = models.CharField(max_length=200)
-    bio = models.CharField(max_length=1000)
-
-    class Meta:
-        managed = False
-        db_table = 'filter_media_artist'
-
-
 class Genre(models.Model):
     genre_id = models.AutoField(primary_key=True)
     genre_name = models.CharField(max_length=200, blank=True, null=True)
