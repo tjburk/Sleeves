@@ -1,43 +1,50 @@
 <html>
     <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'search/media_search.css' %}" />
         <title>Search</title>
     </head>
     <body>
         {% include 'homepage/navbar.html' %}
-        <input type=button value="Back" onClick="javascript:history.go(-1);">
-        <form method="post">
-            {% csrf_token %}
-            {{ search_form }}
-            <input type="submit" value="Submit">
-        </form>
-        <ul>
+        <div id="page-dimensions">
+            <form method="post">
+                {% csrf_token %}
+                {{ search_form }}
+                <input type="submit" class="button" value="Submit">
+            </form>
+        </div>
             {% if search_results %}
+                <div class="center-boxes">
                 {% for media_item in search_results %}
+                    <div class="media-display-box">
                     {% if media_item.type == "album" or media_item.type == "track" %}
-                        {% if media_item.type == "album" %}
-                            <li><strong>{{media_item.album_type.capitalize}}: </strong>
-                        {% elif media_item.type == "track" %}
-                            <li><strong>Song: </strong>
-                        {% endif %}
-                        <span><a href="{% url 'media_page' media_item.spotify_id%}">{{ media_item.name }}</a> by {{ media_item.artist_name }}</span>
-                        <div><strong>Rating: </strong>{{ media_item.overall_rating }}</div>
-                        <img src = "{{ media_item.album_art }}">
-                        </li>
+                        <div>
+                            <img id="album-art" src = "{{ media_item.album_art }}">
+                        </div>
+                        <div class="media-info">
+                            {% if media_item.type == "album" %}
+                                <strong>{{media_item.album_type.capitalize}}: </strong>
+                            {% elif media_item.type == "track" %}
+                                <strong>Song: </strong>
+                            {% endif %}
+                            <span><a href="{% url 'media_page' media_item.spotify_id%}">{{ media_item.name }}</a> by {{ media_item.artist_name }}</span>
+                            <div><strong>Rating: </strong>{{ media_item.overall_rating }}</div>
+                        </div>
                     {% elif media_item.type == "show" or media_item.type == "episode" %}
                         {% if media_item.type == "show" %}
-                            <li><strong>Podcast: </strong>
+                            <strong>Podcast: </strong>
                         {% elif media_item.type == "episode" %}
-                            <li><strong>Episode: </strong>
+                            <strong>Episode: </strong>
                         {% endif %}
                         <span><a href="{% url 'media_page' media_item.spotify_id%}">{{ media_item.name }}</a> by {{ media_item.producer }}</span>
                         <div><strong>Rating: </strong>{{ media_item.overall_rating }}</div>
                         <img src = "{{ media_item.image }}">
-                        </li>
                     {% endif %}
+                    </div>
                 {% endfor %}
+                </div>
             {% else %}
-                <p>No results...</p>    
+                <p style="text-align: center;">No results...</p>
             {% endif %}
-        </ul>
     </body>
 </html>
