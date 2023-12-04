@@ -17,7 +17,7 @@
 
     {% if user.is_authenticated %}
     <div class="right-info">
-      <span class="username">test</span>
+      <span class="username">{{user.username}}</span>
     </div>
     <a href="{% url 'logout' %}">
       <img id='logout-button' src="../../static/images/logout-button.png" title="Logout">
