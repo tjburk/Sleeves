@@ -15,6 +15,7 @@
                 <div style="display: flex; height: 600px;">
                     {% for review in reviews %}
                         <div style="width: 200px; padding-left: 15px;">
+                            <a class="nav-link scrollto" href="{% url 'media_page' review.spotify_id %}">Link to Album</a>
                             <div><strong>{{ review.title }}</strong></div>
                             <div>{{ review.star_rating }} Stars </div>
                             <div>"{{ review.text }}"</div>
