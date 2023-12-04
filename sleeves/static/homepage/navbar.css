@@ -104,6 +104,7 @@ body {
   letter-spacing: 0.4px;
   position: relative;
   text-transform: uppercase;
+  text-decoration: none
 }
 
 .navbar a i,
