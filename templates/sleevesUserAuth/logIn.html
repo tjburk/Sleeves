@@ -1,14 +1,25 @@
-<h2>Login</h2>
+<html>
+    <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'user_authentication/login.css' %}" />
+        <title>Login</title>
+    </head>
+    <body>
+        {% include 'homepage/navbar.html' %}
+        <div id="content">
+            <h2>Login</h2>
+            <form method="post">
+                {% if form.errors %}
+                    <p>Your username and password didn't match. Please try again.</p>
+                {% endif %}
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="button" value="Login">
 
-<form method="post">
-    {% if form.errors %}
-        <p>Your username and password didn't match. Please try again.</p>
-    {% endif %}
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Login">
-
-    <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
-</form>
-
-<input type=button value="Back" onClick="javascript:history.go(-1);">
+                <p>Don't have an account? <a href="{% url 'signup' %}">Sign Up</a></p>
+            </form>
+            <br><br><br><br><br>
+            <input type=button class="button" value="Back" onClick="javascript:history.go(-1);">
+        </div>
+    </body>
+</html>
