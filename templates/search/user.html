@@ -15,10 +15,13 @@
             </form>
 
                 {% if user_results %}
+                    <div class="center-boxes">
                     <h3 class="text">Results</h3>
-                    <div style="text-align: left; padding-left: 47.2%;">
+                    <!--<div style="text-align: left; padding-left: 47.2%;"> -->
                         {% for user in user_results %}
-                            <div><strong>User: </strong><a href="{% url 'user_page' user.id %}">{{ user.username }}</a></div>
+                            <div class="media-display-box">
+                                <div><a href="{% url 'user_page' user.id %}">{{ user.username }}</a></div>
+                            </div>
                         {% endfor %}
                     </div>
                 {% else %}

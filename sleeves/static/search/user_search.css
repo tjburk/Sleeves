@@ -33,3 +33,17 @@ h1 {
   font-size: 18px;
   padding-top: 15px;
 }
+
+.center-boxes {
+  display: grid;
+  justify-content: center;
+}
+
+.media-display-box {
+  display: flex;
+  text-align: center;
+  padding: 20 15 20 10;
+  background-color: lightgray;
+  margin-bottom: 10px;
+  width: auto;
+}
