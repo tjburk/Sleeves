@@ -12,58 +12,87 @@
                 <input type=button class="button" value="Back" onClick="javascript:history.go(-1);">
             </div>
             {% if album or song %}
-                <div class="display-box">
+                <div class="media-display-box">
                     <img id="album-art" src={{album.album_art}}>
                     <div class="media-info">
-                        <h1>{{media.name}}</h1>
-                        <h3> - <a href="{% url 'artist_page' artist.artist_id %}">{{artist.artist_name}}</a></h3>
-                        <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
+                        <h2>{{media.name}}</h2>
+                        <h3> By <a href="{% url 'artist_page' artist.artist_id %}">{{artist.artist_name}}</a></h3>
+                        <h3>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h3>
+                        {% if song %}
+                            <div class="link-to-spotify">
+                                <a href="https://open.spotify.com/track/{{media.spotify_id}}">
+                                    <button class="button">Link to Spotify</button>
+                                </a>
+                            </div>
+                            <div style="text-align: left; padding-left: 75px;">
+                                <div><strong>Tempo: </strong>{{song.tempo}}</div>
+                                <div><strong>Key: </strong>{{song_key}}</div>
+                                <div><strong>Loudness: </strong>{{song.loudness}}dB</div>
+                                <div><strong>Length: </strong>{% widthratio song.length 1000 1 %} seconds</div>
+                            </div>
+                        {% elif album %}
+                            <div class="link-to-spotify">
+                                <a href="https://open.spotify.com/album/{{media.spotify_id}}">
+                                    <button class="button">Link to Spotify</button>
+                                </a>
+                            </div>
+                            <div style="text-align: left; padding-left: 75px;">
+                                <div><strong>Album Type: </strong>{{album.album_type.capitalize}}</div>
+                                <div><strong>Record Label: </strong>{{album.record_label}}</div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% elif podcast or episode %}
-                <div class="display-box">
+                <div class="media-display-box">
                     <img src={{podcast.image}}>
                     <div class="media-info">
-                        <h1>{{media.name}}</h1>
-                        <h3> - {{podcast.producer}}</h3>
-                        <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
+                        <h2>{{media.name}}</h2>
+                        <h3> By {{podcast.producer}}</h3>
+                        <h3>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h3>
+                        {% if episode %}
+                            <div class="link-to-spotify">
+                                <a href="https://open.spotify.com/episode/{{media.spotify_id}}">
+                                    <button class="button">Link to Spotify</button>
+                                </a>
+                            </div>
+                            <div style="text-align: left; padding-left: 30px;">
+                                <div><strong>Synopsis: </strong>{{episode.synopsis}}</div>
+                                <div><strong>Release Date: </strong>{{episode.release_date}}</div>
+                                <div><strong>Length: </strong>{% widthratio episode.length 1000 1 %} seconds</div>
+                            </div>
+                        {% elif podcast %}
+                            <div class="link-to-spotify">
+                                <a href="https://open.spotify.com/show/{{media.spotify_id}}">
+                                    <button class="button">Link to Spotify</button>
+                                </a>
+                            </div>
+                            <div style="text-align: left; padding-left: 30px;">
+                                <div><strong>Description: </strong>{{podcast.description}}</div>
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             {% endif %}
 
+            <br>
 
-            <h2>Info</h2>
-            {% if song %}
-                <div><strong>Tempo: </strong>{{song.tempo}}</div>
-                <div><strong>Key: </strong>{{song_key}}</div>
-                <div><strong>Loudness: </strong>{{song.loudness}}dB</div>
-                <div><strong>Length: </strong>{% widthratio song.length 1000 1 %} seconds</div>
-                <div><a href="https://open.spotify.com/track/{{media.spotify_id}}">Spotify</a></div>
-            {% elif album %}
-                <div><strong>Album Type: </strong>{{album.album_type.capitalize}}</div>
-                <div><strong>Record Label: </strong>{{album.record_label}}</div>
-                <div><a href="https://open.spotify.com/album/{{media.spotify_id}}">Spotify</a></div>
-            {% elif episode %}
-                <div><strong>Synopsis: </strong>{{episode.synopsis}}</div>
-                <div><strong>Release Date: </strong>{{episode.release_date}}</div>
-                <div><strong>Length: </strong>{% widthratio episode.length 1000 1 %} seconds</div>
-                <div><a href="https://open.spotify.com/episode/{{media.spotify_id}}">Spotify</a></div>
-            {% elif podcast %}
-                <div><strong>Description: </strong>{{podcast.description}}</div>
-                <div><a href="https://open.spotify.com/show/{{media.spotify_id}}">Spotify</a></div>
-            {% endif %}
-
-
-            <h2>Reviews</h2>
-            {% if reviews %}
-                {% for review in reviews %}
-                    <div><strong>{{review.title}}</strong></div>
-                    <div>{{review.text}}</div>
-                    <div>- {{review.star_rating}} Stars</div><br>
-                {% endfor %}
-            {% else %}
-                <p>No reviews yet!</p>
-            {% endif %}
+            <div class="review-display-box">
+                <div><h2 style="text-align: left; padding-left: 10px;">Reviews</h2></div>
+                {% if reviews %}
+                    <div style="display: flex;">
+                    {% for review in reviews %}
+                        <div style="text-align: left; padding-left: 10px; padding-right: 25px">
+                            <div><strong>{{review.title}}</strong></div>
+                            <div>{{review.text}}</div>
+                            <div>- {{review.star_rating}} Stars</div><br>
+                        </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No reviews yet!</p>
+                {% endif %}
+            </div>
         </div>
     </body>
 </html>
