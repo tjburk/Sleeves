@@ -1,23 +1,29 @@
 <html>
     <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'search/user_search.css' %}" />
         <title>User Search</title>
     </head>
     <body>
         {% include 'homepage/navbar.html' %}
-        <input type=button value="Back" onClick="javascript:history.go(-1);">
-        <form method="post">
-            {% csrf_token %}
-            {{ user_form }}
-            <input type="submit" value="Submit">
-        </form>
-        <ul>
-            {% if user_results %}
-                {% for user in user_results %}
-                    <li><strong>User: </strong><a href="{% url 'user_page' user.id %}">{{ user.username }}</a>
-                {% endfor %}
-            {% else %}  
-                <p>No results...</p>    
-            {% endif %}
-        </ul>
+        <div id="page-dimensions">
+            <br><br><br><br><br>
+            <form class="text" method="post">
+                {% csrf_token %}
+                {{ user_form }}
+                <input type="submit" class="button" value="Submit">
+            </form>
+
+                {% if user_results %}
+                    <h3 class="text">Results</h3>
+                    <div style="text-align: left; padding-left: 47.2%;">
+                        {% for user in user_results %}
+                            <div><strong>User: </strong><a href="{% url 'user_page' user.id %}">{{ user.username }}</a></div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No results...</p>
+                {% endif %}
+        </div>
     </body>
 </html>
