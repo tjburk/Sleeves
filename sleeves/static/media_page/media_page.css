@@ -12,3 +12,19 @@ h1 {
   width: 300px;
   height: auto;
 }
+
+#page-dimensions {
+  margin-top: 40px;
+  text-align: center;
+  padding-bottom: 40px;
+}
+
+.media-info {
+  padding-left: 15px;
+}
+
+.display-box {
+  display: flex;
+  padding: 20 15 20 10;
+  background-color: lightgray;
+}

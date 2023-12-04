@@ -6,51 +6,64 @@
     </head>
     <body>
         {% include 'homepage/navbar.html' %}
-        <input type=button value="Back" onClick="javascript:history.go(-1);">
 
-        <h1>{{media.name}}</h1>
-        {% if album or song %}
-            <h3> - <a href="{% url 'artist_page' artist.artist_id %}">{{artist.artist_name}}</a></h3>
-            <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
-            <img id="album-art" src={{album.album_art}}>
-        {% elif podcast or episode %}
-            <h3> - {{podcast.producer}}</h3>
-            <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
-            <img src={{podcast.image}}>
-        {% endif %}
+        <div id="page-dimensions">
+            <div>
+                <input type=button class="button" value="Back" onClick="javascript:history.go(-1);">
+            </div>
+            {% if album or song %}
+                <div class="display-box">
+                    <img id="album-art" src={{album.album_art}}>
+                    <div class="media-info">
+                        <h1>{{media.name}}</h1>
+                        <h3> - <a href="{% url 'artist_page' artist.artist_id %}">{{artist.artist_name}}</a></h3>
+                        <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
+                    </div>
+                </div>
+            {% elif podcast or episode %}
+                <div class="display-box">
+                    <img src={{podcast.image}}>
+                    <div class="media-info">
+                        <h1>{{media.name}}</h1>
+                        <h3> - {{podcast.producer}}</h3>
+                        <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
+                    </div>
+                </div>
+            {% endif %}
 
 
-        <h2>Info</h2>
-        {% if song %}
-            <div><strong>Tempo: </strong>{{song.tempo}}</div>
-            <div><strong>Key: </strong>{{song_key}}</div>
-            <div><strong>Loudness: </strong>{{song.loudness}}dB</div>
-            <div><strong>Length: </strong>{% widthratio song.length 1000 1 %} seconds</div>
-            <div><a href="https://open.spotify.com/track/{{media.spotify_id}}">Spotify</a></div>
-        {% elif album %}
-            <div><strong>Album Type: </strong>{{album.album_type.capitalize}}</div>
-            <div><strong>Record Label: </strong>{{album.record_label}}</div>
-            <div><a href="https://open.spotify.com/album/{{media.spotify_id}}">Spotify</a></div>
-        {% elif episode %}
-            <div><strong>Synopsis: </strong>{{episode.synopsis}}</div>
-            <div><strong>Release Date: </strong>{{episode.release_date}}</div>
-            <div><strong>Length: </strong>{% widthratio episode.length 1000 1 %} seconds</div>
-            <div><a href="https://open.spotify.com/episode/{{media.spotify_id}}">Spotify</a></div>
-        {% elif podcast %}
-            <div><strong>Description: </strong>{{podcast.description}}</div>
-            <div><a href="https://open.spotify.com/show/{{media.spotify_id}}">Spotify</a></div>
-        {% endif %}
+            <h2>Info</h2>
+            {% if song %}
+                <div><strong>Tempo: </strong>{{song.tempo}}</div>
+                <div><strong>Key: </strong>{{song_key}}</div>
+                <div><strong>Loudness: </strong>{{song.loudness}}dB</div>
+                <div><strong>Length: </strong>{% widthratio song.length 1000 1 %} seconds</div>
+                <div><a href="https://open.spotify.com/track/{{media.spotify_id}}">Spotify</a></div>
+            {% elif album %}
+                <div><strong>Album Type: </strong>{{album.album_type.capitalize}}</div>
+                <div><strong>Record Label: </strong>{{album.record_label}}</div>
+                <div><a href="https://open.spotify.com/album/{{media.spotify_id}}">Spotify</a></div>
+            {% elif episode %}
+                <div><strong>Synopsis: </strong>{{episode.synopsis}}</div>
+                <div><strong>Release Date: </strong>{{episode.release_date}}</div>
+                <div><strong>Length: </strong>{% widthratio episode.length 1000 1 %} seconds</div>
+                <div><a href="https://open.spotify.com/episode/{{media.spotify_id}}">Spotify</a></div>
+            {% elif podcast %}
+                <div><strong>Description: </strong>{{podcast.description}}</div>
+                <div><a href="https://open.spotify.com/show/{{media.spotify_id}}">Spotify</a></div>
+            {% endif %}
 
-        
-        <h2>Reviews</h2>
-        {% if reviews %}
-            {% for review in reviews %}
-                <div><strong>{{review.title}}</strong></div>
-                <div>{{review.text}}</div>
-                <div>- {{review.star_rating}} Stars</div><br>
-            {% endfor %}
-        {% else %}
-            <p>No reviews yet!</p>
-        {% endif %}
+
+            <h2>Reviews</h2>
+            {% if reviews %}
+                {% for review in reviews %}
+                    <div><strong>{{review.title}}</strong></div>
+                    <div>{{review.text}}</div>
+                    <div>- {{review.star_rating}} Stars</div><br>
+                {% endfor %}
+            {% else %}
+                <p>No reviews yet!</p>
+            {% endif %}
+        </div>
     </body>
 </html>
