@@ -1,27 +1,42 @@
 <html>
     <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'user_page/user_page.css' %}" />
         <title>User</title>
     </head>
     <body>
         {% include 'homepage/navbar.html' %}
-        <input type=button value="Back" onClick="javascript:history.go(-1);">
+        <div id="page-dimensions">
+            <input type=button class="button" value="Back" onClick="javascript:history.go(-1);">
+            <br><br>
+            <h1>{{review_user.username}}</h1>
+            {% if reviews %}
+                <br>
+                <div style="display: flex; height: 600px;">
+                    {% for review in reviews %}
+                        <div style="width: 200px; padding-left: 15px;">
+                            <div><strong>{{ review.title }}</strong></div>
+                            <div>{{ review.star_rating }} Stars </div>
+                            <div>"{{ review.text }}"</div>
 
-        <h1>{{review_user.username}}</h1>
-        {% if reviews %}
-            {% for review in reviews %}
-                <li>
-                    <strong>{{ review.title }}</strong>  {{ review.star_rating }} Stars
-                    <p>"{{ review.text }}"</p>
-                    {% if user.is_authenticated %}
-                        {% if user.id == review.id %}
-                            <a href="{% url 'delete_review' review.auth_id review.spotify_id review.title %}">Delete Review</a>
-                        {% endif %}
-                    {% endif %}
-                    <br><br>
-                </li>
-            {% endfor %}
-        {% else %}
-            <p>This user has no reviews...</p>
-        {% endif %}
+                            <br>
+
+                            {% if user.is_authenticated %}
+                                {% if user.id == review.id %}
+                                    <div>
+                                        <a href="{% url 'delete_review' review.auth_id review.spotify_id review.title %}">
+                                            <button class="button">Delete Review</button>
+                                        </a>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                            <br><br>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>This user has no reviews...</p>
+            {% endif %}
+        </div>
     </body>
 </html>
