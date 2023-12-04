@@ -1,23 +1,38 @@
 <html>
     <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'create_rating/create_rating.css' %}" />
         <title>Create Rating</title>
     </head>
     <body>
         {% include 'homepage/navbar.html' %}
-        <input type=button value="Back" onClick="javascript:history.go(-1);">
-        <h1>Create Rating</h1>
-        <form method="post">
-            {% csrf_token %}
-            {{ rate_form }}
-            <input type="submit" value="Submit">
-        </form>
+        <div id="page-dimensions">
+            <h2>Create Rating</h2>
+            <div id="submission-form">
+                <form style="text-align: left;" method="post">
+                    {% csrf_token %}
+                    {% for field in rate_form %}
+                      <label class="label">{{ field.label }}</label>
+                      <div class="form" name="{{ field.label }}">
+                        {{ field }}
+                      </div><br>
+                    {% endfor %}
+                    <input type="submit" class=button value="Submit">
+                    <br><br>
+                    {% if init %}
+                        {% if success %}
+                            <div style="color: #3cb371; font-size: 18px;">
+                                <p>Succesfully created rating by {{user.username}}</p>
+                            </div>
+                        {% else %}
+                            <div style="color: #ff0000; font-size: 18px;">
+                                <p>There was a problem creating your review... Is it a duplicate?</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </form>
 
-        {% if init %}
-            {% if success %}
-                <p>Rating created by {{user.username}}</p>
-            {% else %}
-                <p>There was a problem creating your review... Is it a duplicate?</p>
-            {% endif %}
-        {% endif %}
+            </div>
+        </div>
     </body>
 </html>
