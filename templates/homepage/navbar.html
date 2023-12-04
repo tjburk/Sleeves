@@ -8,10 +8,28 @@
 <div id="header">
 
   <div id="title-container">
-    <img id='record-logo' src="../../static/images/record.png">
+
     <div id="logo">
-      <h1>Sleeves</h1>
+      <h1>SLEEVES</h1>
     </div>
+
+    <img id='record-logo' src="../../static/images/record.png">
+
+    {% if user.is_authenticated %}
+    <div class="right-info">
+      <span class="username">test</span>
+    </div>
+    <a href="{% url 'logout' %}">
+      <img id='logout-button' src="../../static/images/logout-button.png" title="Logout">
+    </a>
+    {% else %}
+    <div class="right-info">
+      <a href="{% url 'login' %}">
+        <button class="button">LOGIN</button>
+      </a>
+    </div>
+    {% endif %}
+
   </div>
 
   <nav id="navbar" class="navbar">
