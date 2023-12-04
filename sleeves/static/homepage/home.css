@@ -8,15 +8,23 @@ h1 {
   font-family: 'Ubuntu', sans-serif;
 }
 
+.page-dimensions {
+  padding-bottom: 52px;
+}
+
 #songs-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  margin-left: 20px;
+  margin-right: 20px;
   gap: 50px;
 }
 
 #albums-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
+  margin-left: 20px;
+  margin-right: 20px;
   gap: 50px;
 }
 
@@ -28,4 +36,20 @@ h1 {
 .top-albums {
   width: 100%;
   height: auto;
+}
+
+#featured-review {
+  width: 300px;
+  height: auto;
+  padding-left: 15px;
+}
+
+.display-box {
+  display: flex;
+  padding: 20 15 20 10;
+  background-color: lightgray;
+}
+
+#review-info {
+  padding-left: 15px;
 }
