@@ -9,37 +9,44 @@
 
         <div class="page-dimensions">
 
-        <h1>TOP 5 SONGS</h1>
-        <div class="display-box">
-            <div id="songs-grid">
-                {% if top5media.4 %}
-                    <span><a href="{% url 'media_page' top5media.0.spotify_id%}">{{top5media.0.name}}</a>, {{top5media.0.overall_rating}}<img class='top-songs' src="{{top5songs_albums.0.album_art}}"></span>
-                    <span><a href="{% url 'media_page' top5media.1.spotify_id%}">{{top5media.1.name}}</a>, {{top5media.1.overall_rating}}<img class='top-songs' src="{{top5songs_albums.1.album_art}}"></span>
-                    <span><a href="{% url 'media_page' top5media.2.spotify_id%}">{{top5media.2.name}}</a>, {{top5media.2.overall_rating}}<img class='top-songs' src="{{top5songs_albums.2.album_art}}"></span>
-                    <span><a href="{% url 'media_page' top5media.3.spotify_id%}">{{top5media.3.name}}</a>, {{top5media.3.overall_rating}}<img class='top-songs' src="{{top5songs_albums.3.album_art}}"></span>
-                    <span><a href="{% url 'media_page' top5media.4.spotify_id%}">{{top5media.4.name}}</a>, {{top5media.4.overall_rating}}<img class='top-songs' src="{{top5songs_albums.4.album_art}}"></span>
-                {% else %}
-                    <span>Not enough songs to display top 5</span>
-                {% endif %}
-            </div>
-        </div>
-        <h1>TOP 5 ALBUMS</h1>
-        <div class="display-box">
-            <div id="albums-grid">
-                {% for album in bestestalbums %}
-                    <span><a href="{% url 'media_page' album.spotify_id%}">{{album.name}}</a>, {{album.overall_rating}} <img class='top-albums' src ="{{album.album_art}}"></span>
-                {% endfor %}
+        <div class="content-divider">
+            <h1 class="text-header">TOP 5 SONGS</h1>
+            <div class="display-box">
+                <div id="songs-grid">
+                    {% if top5media.4 %}
+                        <span><img class='top-songs' src="{{top5songs_albums.0.album_art}}"> <br> <a href="{% url 'media_page' top5media.0.spotify_id%}">{{top5media.0.name}}</a> - {{top5media.0.overall_rating}} <a>Stars</a></span>
+                        <span><img class='top-songs' src="{{top5songs_albums.1.album_art}}"> <br> <a href="{% url 'media_page' top5media.1.spotify_id%}">{{top5media.1.name}}</a> - {{top5media.1.overall_rating}} <a>Stars</a></span>
+                        <span><img class='top-songs' src="{{top5songs_albums.2.album_art}}"> <a href="{% url 'media_page' top5media.2.spotify_id%}">{{top5media.2.name}}</a> - {{top5media.2.overall_rating}} <a>Stars</a></span>
+                        <span><img class='top-songs' src="{{top5songs_albums.3.album_art}}"> <a href="{% url 'media_page' top5media.3.spotify_id%}">{{top5media.3.name}}</a> - {{top5media.3.overall_rating}} <a>Stars</a></span>
+                        <span><img class='top-songs' src="{{top5songs_albums.4.album_art}}"> <a href="{% url 'media_page' top5media.4.spotify_id%}">{{top5media.4.name}}</a> - {{top5media.4.overall_rating}} <a>Stars</a></span>
+                    {% else %}
+                        <span>Not enough songs to display top 5</span>
+                    {% endif %}
+                </div>
             </div>
         </div>
 
-        <h1>FEATURED REVIEW</h1>
-        <div class="display-box">
-            <img id="featured-review" src="{{review.album_art}}"></img>
-            <div id="review-info">
-                <p><strong>{{review_media.type.capitalize}}</strong>: <a href="{% url 'media_page' review_media.spotify_id%}">{{review_media.name}}</a> by <a href="{% url 'artist_page' review_artist.artist_id %}">{{review_artist.artist_name}}</a></p>
-                <p><strong>{{review.title}}</strong> - {{review.star_rating}} Stars</p>
-                <p>{{review.text}}</p>
-                <a href="{% url 'user_page' review_user.id %}">{{review_user.username}}</a>
+        <div class="content-divider">
+            <h1 class="text-header">TOP 5 ALBUMS</h1>
+            <div class="display-box">
+                <div id="albums-grid">
+                    {% for album in bestestalbums %}
+                        <span><img class='top-albums' src ="{{album.album_art}}"><a href="{% url 'media_page' album.spotify_id%}">{{album.name}}</a> - {{album.overall_rating}} <a>Stars</a></span>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="content-divider">
+            <h1 class="text-header">FEATURED REVIEW</h1>
+            <div class="display-box">
+                <img id="featured-review" src="{{review.album_art}}"></img>
+                <div id="review-info">
+                    <p><strong>{{review_media.type.capitalize}}</strong>: <a href="{% url 'media_page' review_media.spotify_id%}">{{review_media.name}}</a> by <a href="{% url 'artist_page' review_artist.artist_id %}">{{review_artist.artist_name}}</a></p>
+                    <p><strong>{{review.title}}</strong> - {{review.star_rating}} Stars</p>
+                    <p>{{review.text}}</p>
+                    <a href="{% url 'user_page' review_user.id %}">{{review_user.username}}</a>
+                </div>
             </div>
         </div>
 

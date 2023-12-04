@@ -9,7 +9,8 @@ h1 {
 }
 
 .page-dimensions {
-  padding-bottom: 52px;
+  padding-top: 20px;
+  /*padding-bottom: 52px;*/
 }
 
 #songs-grid {
@@ -31,11 +32,13 @@ h1 {
 .top-songs {
     width: 100%;
     height: auto;
+    padding-bottom: 10px;
 }
 
 .top-albums {
   width: 100%;
   height: auto;
+  padding-bottom: 10px;
 }
 
 #featured-review {
@@ -52,4 +55,12 @@ h1 {
 
 #review-info {
   padding-left: 15px;
+}
+
+.text-header {
+  text-align: center;
+}
+
+.content-divider {
+  padding-bottom: 50px;
 }
