@@ -16,7 +16,7 @@ def user_login(request):
                 return redirect("/")
     else:
         form = LoginForm()
-    return render(request, 'sleevesUserAuth/login.html', {'form':form})
+    return render(request, 'sleevesUserAuth/logIn.html', {'form':form})
 
 def user_logout(request):
     logout(request)
