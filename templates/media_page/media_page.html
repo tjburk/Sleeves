@@ -1,5 +1,7 @@
 <html>
     <head>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'media_page/media_page.css' %}" />
         <title>Media</title>
     </head>
     <body>
@@ -10,7 +12,7 @@
         {% if album or song %}
             <h3> - <a href="{% url 'artist_page' artist.artist_id %}">{{artist.artist_name}}</a></h3>
             <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
-            <img src={{album.album_art}}>
+            <img id="album-art" src={{album.album_art}}>
         {% elif podcast or episode %}
             <h3> - {{podcast.producer}}</h3>
             <h2>{% if reviews %}{{media.overall_rating}} Stars{% endif %}</h2>
