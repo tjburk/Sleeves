@@ -86,6 +86,7 @@
                             <div><strong>{{review.title}}</strong></div>
                             <div>{{review.text}}</div>
                             <div>- {{review.star_rating}} Stars</div><br>
+                            <a class="nav-link scrollto" href="{% url 'user_page' review.auth_id %}">User</a>
                         </div>
                     {% endfor %}
                     </div>
