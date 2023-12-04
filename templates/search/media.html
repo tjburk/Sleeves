@@ -7,7 +7,7 @@
     <body>
         {% include 'homepage/navbar.html' %}
         <div id="page-dimensions">
-            <form method="post">
+            <form class="text" method="post">
                 {% csrf_token %}
                 {{ search_form }}
                 <input type="submit" class="button" value="Submit">

@@ -52,3 +52,8 @@ h1 {
 .media-info {
   padding-left: 15px;
 }
+
+.text {
+  font-size: 18px;
+  padding-top: 15px;
+}
