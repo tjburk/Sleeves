@@ -10,6 +10,7 @@ from spotipy.oauth2 import SpotifyClientCredentials
 client_credentials_manager = SpotifyClientCredentials(client_id=settings.SPOTIPY_CLIENT_ID, client_secret=settings.SPOTIPY_CLIENT_SECRET)
 spotify = spotipy.Spotify(client_credentials_manager = client_credentials_manager)
 
+#Requires that users are logged in to create a rating
 @login_required(login_url="/auth/login")
 def create_rating(request):
     # Process form
@@ -41,7 +42,6 @@ def create_rating(request):
 
     return render(request, 'create_rating/create_rating.html', 
                 {'rate_form': rate_form, "init":False})
-
 
 def insert_rating(user_id, spotify_id, title, star_rating, text):
     print("rating: " + str(user_id) + " " + spotify_id + " " + title)
